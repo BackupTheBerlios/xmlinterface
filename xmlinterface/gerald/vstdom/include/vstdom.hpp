@@ -63,7 +63,7 @@ public:
   /**
    * returns a widget specified by the name
    */
-  widget getWidget( std::string name);
+  widget* getWidget( std::string name);
 
   /**
    * add a Widget to a widget in the VST-DOM Tree

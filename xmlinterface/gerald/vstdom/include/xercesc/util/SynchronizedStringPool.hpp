@@ -56,8 +56,8 @@
 
 /*
  * $Log: SynchronizedStringPool.hpp,v $
- * Revision 1.2  2004/05/26 20:55:09  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:21  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.1  2003/10/09 13:51:16  neilg
  * implementation of a StringPool implementation that permits thread-safe updates.  This can now be used by a grammar pool that is locked so that scanners have somehwere to store information about newly-encountered URIs

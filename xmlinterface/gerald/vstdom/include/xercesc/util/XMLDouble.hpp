@@ -55,10 +55,10 @@
  */
 
 /*
- * $Id: XMLDouble.hpp,v 1.2 2004/05/26 20:55:09 geraschna Exp $
+ * $Id: XMLDouble.hpp,v 1.3 2004/06/03 20:45:21 geraschna Exp $
  * $Log: XMLDouble.hpp,v $
- * Revision 1.2  2004/05/26 20:55:09  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:21  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.8  2003/12/17 00:18:35  cargilld
  * Update to memory management so that the static memory manager (one used to call Initialize) is only for static data.

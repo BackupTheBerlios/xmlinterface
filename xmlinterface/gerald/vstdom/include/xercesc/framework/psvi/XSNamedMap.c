@@ -56,8 +56,8 @@
 
 /**
  * $Log: XSNamedMap.c,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.3  2003/11/07 20:30:28  neilg
  * fix compilation errors on AIX and HPUX; thanks to David Cargill

@@ -58,7 +58,7 @@
  */
 
 /*
- * $Id: DOMAttr.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
+ * $Id: DOMAttr.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
  */
 
 

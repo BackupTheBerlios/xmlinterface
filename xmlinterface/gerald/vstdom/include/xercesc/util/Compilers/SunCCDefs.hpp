@@ -56,8 +56,8 @@
 
 /*
  * $Log: SunCCDefs.hpp,v $
- * Revision 1.2  2004/05/26 20:55:09  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:21  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.6  2003/05/29 11:18:37  gareth
  * Added macros in so we can determine whether to do things like iostream as opposed to iostream.h and whether to use std:: or not.

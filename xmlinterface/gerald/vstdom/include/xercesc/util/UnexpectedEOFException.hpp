@@ -55,7 +55,7 @@
  */
 
 /*
- * $Id: UnexpectedEOFException.hpp,v 1.2 2004/05/26 20:55:09 geraschna Exp $
+ * $Id: UnexpectedEOFException.hpp,v 1.3 2004/06/03 20:45:21 geraschna Exp $
  */
 
 #if !defined(UNEXPECTEDEOFEXCEPTION_HPP)

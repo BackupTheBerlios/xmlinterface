@@ -56,8 +56,8 @@
 
 /*
  * $Log: XSerializeEngine.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.14  2004/02/11 20:38:50  peiyongz
  * Fix to bug#26864, thanks to David Bertoni.
@@ -101,7 +101,7 @@
  * Revision 1.1  2003/09/18 18:31:24  peiyongz
  * OSU: Object Serialization Utilities
  *
- * $Id: XSerializeEngine.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
+ * $Id: XSerializeEngine.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
  *
  */
 

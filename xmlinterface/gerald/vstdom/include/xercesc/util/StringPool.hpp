@@ -56,8 +56,8 @@
 
 /*
  * $Log: StringPool.hpp,v $
- * Revision 1.2  2004/05/26 20:55:09  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:21  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.7  2003/10/29 16:18:41  peiyongz
  * Implement serialization/deserialization

@@ -56,8 +56,8 @@
 
 /*
  * $Log: PSVIAttribute.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.6  2003/12/30 05:58:56  neilg
  * allow schema normalized values to be associated with a PSVIAttribute after it is reset

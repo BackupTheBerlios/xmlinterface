@@ -56,8 +56,8 @@
 
 /*
  * $Log: XMLEntityResolver.hpp,v $
- * Revision 1.2  2004/05/26 20:55:09  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:21  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.1  2003/10/30 21:37:32  knoaman
  * Enhanced Entity Resolver Support. Thanks to David Cargill.

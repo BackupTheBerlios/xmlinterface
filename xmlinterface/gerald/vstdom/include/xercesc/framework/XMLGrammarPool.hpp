@@ -56,8 +56,8 @@
 
 /*
  * $Log: XMLGrammarPool.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.11  2003/11/25 15:10:44  jberry
  * Eliminate some compiler warnings concerning comments inside of comments
@@ -94,7 +94,7 @@
  * Revision 1.1  2003/06/20 18:37:39  peiyongz
  * Stateless Grammar Pool :: Part I
  *
- * $Id: XMLGrammarPool.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
+ * $Id: XMLGrammarPool.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
  *
  */
 

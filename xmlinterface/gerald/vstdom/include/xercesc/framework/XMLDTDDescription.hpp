@@ -56,8 +56,8 @@
 
 /*
  * $Log: XMLDTDDescription.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.2  2003/10/14 15:17:47  peiyongz
  * Implementation of Serialization/Deserialization
@@ -65,7 +65,7 @@
  * Revision 1.1  2003/06/20 18:37:39  peiyongz
  * Stateless Grammar Pool :: Part I
  *
- * $Id: XMLDTDDescription.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
+ * $Id: XMLDTDDescription.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
  *
  */
 

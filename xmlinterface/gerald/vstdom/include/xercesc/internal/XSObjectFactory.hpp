@@ -56,8 +56,8 @@
 
 /*
  * $Log: XSObjectFactory.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.8  2004/01/07 02:33:56  knoaman
  * PSVI: inherit facets from base type

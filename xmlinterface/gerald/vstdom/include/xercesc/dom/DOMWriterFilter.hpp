@@ -58,10 +58,10 @@
  */
 
 /*
- * $Id: DOMWriterFilter.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
+ * $Id: DOMWriterFilter.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
  * $Log: DOMWriterFilter.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.9  2003/03/07 19:59:09  tng
  * [Bug 11692] Unimplement the hidden constructors and assignment operator to remove warnings from gcc.

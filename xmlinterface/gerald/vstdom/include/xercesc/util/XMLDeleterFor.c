@@ -56,8 +56,8 @@
 
 /*
  * $Log: XMLDeleterFor.c,v $
- * Revision 1.2  2004/05/26 20:55:09  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:21  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.2  2002/11/04 15:22:05  tng
  * C++ Namespace Support.

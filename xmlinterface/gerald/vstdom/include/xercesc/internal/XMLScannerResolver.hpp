@@ -56,8 +56,8 @@
 
 /*
  * $Log: XMLScannerResolver.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.4  2003/07/10 19:47:24  peiyongz
  * Stateless Grammar: Initialize scanner with grammarResolver,

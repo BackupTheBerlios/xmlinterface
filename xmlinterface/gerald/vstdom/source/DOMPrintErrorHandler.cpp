@@ -55,10 +55,10 @@
  */
 
 /*
- * $Id: DOMPrintErrorHandler.cpp,v 1.1 2004/05/26 20:39:45 geraschna Exp $
+ * $Id: DOMPrintErrorHandler.cpp,v 1.2 2004/06/03 20:45:21 geraschna Exp $
  * $Log: DOMPrintErrorHandler.cpp,v $
- * Revision 1.1  2004/05/26 20:39:45  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.2  2004/06/03 20:45:21  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.6  2003/05/30 09:36:35  gareth
  * Use new macros for iostream.h and std:: issues.

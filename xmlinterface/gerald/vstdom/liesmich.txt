@@ -13,4 +13,5 @@ alle Funktionen zum auslesen des xml-files.
 
 vstdomsample.cpp
 
-Beispiel für das auslesen des xml-files mittels der vstdom Klasse
+Beispiel für das auslesen des xml-files mittels der vstdom Klasse.
+Anwendungsbeispiel für alle Funktionen.

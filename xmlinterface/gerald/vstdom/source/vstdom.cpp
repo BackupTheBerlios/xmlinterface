@@ -25,6 +25,53 @@ template<typename T> std::string toString(const T& x)
 }
 
 /**
+ * Returns the int Value of the Types Enumaration
+ */
+enum Types sTypeToEnum( const std::string& s)
+{
+  enum Types type = button; // default 0 
+
+  if( !s.compare( "window" ))
+  {
+    type = window;
+  }
+  if( !s.compare( "Menu" ))
+  {
+    type = Menu;
+  }
+  if( !s.compare( "menubar" ))
+  {
+    type = menubar;
+  }
+  if( !s.compare( "MenuItem" ))
+  {
+    type = MenuItem;
+  }
+  if( !s.compare( "textfield" ))
+  {
+    type = textfield;
+  }
+  if( !s.compare( "checkbox" ))
+  {
+    type = checkbox;
+  }
+  if( !s.compare( "combobox" ))
+  {
+    type = combobox;
+  }
+  if( !s.compare( "comboboxElement" ))
+  {
+    type = comboboxElement;
+  }
+  if( !s.compare( "button" ))
+  {
+    type = button;
+  }
+
+  return type;
+}
+
+/**
  * Standard Constructor 
  */
 vstdom::vstdom()
@@ -179,7 +226,7 @@ bool vstdom::writexml( char *xmlfile)
  * returns the number of Childwidget from a parent widget
  * if no name specified, it returns the number of root widgets
  */
-long vstdom::getNumberOfChildWidget( std::string name)
+long vstdom::getNumberOfChildWidget( std::string id)
 {
   long count = 0;
   long temp = 0;
@@ -194,7 +241,7 @@ long vstdom::getNumberOfChildWidget( std::string name)
   {
     DOMElement *widget = (DOMElement *) rootwidgetlist->item(temp);
       
-    if (strcmp(XMLString::transcode( widget->getAttribute(XMLString::transcode( "name"))), name.c_str()))
+    if( !id.compare( XMLString::transcode( widget->getAttribute(XMLString::transcode( "id")))))
     {
       do 
       {
@@ -242,13 +289,13 @@ long vstdom::getNumberOfChildWidget()
  */
 std::string vstdom::getNameOfRootWidget( long NumberOfRootWidget)
 {
-  std::string name = "";
+  std::string id = "";
   long count = 0;
 
   DOMNodeList *rootwidgetlist = doc->getElementsByTagName( XMLString::transcode( "widget"));
   if( rootwidgetlist->getLength() <= 0)         // No widget found
   {
-    return name;
+    return id;
   }
   
   DOMElement *widget = (DOMElement *) rootwidgetlist->item(0);
@@ -259,27 +306,27 @@ std::string vstdom::getNameOfRootWidget( long NumberOfRootWidget)
     {
       if( count == NumberOfRootWidget)
       {
-        return XMLString::transcode( widget->getAttribute(XMLString::transcode( "name")));
+        return XMLString::transcode( widget->getAttribute(XMLString::transcode( "id")));
       }
       count++;      
     }
   } while( widget = (DOMElement *) widget->getNextSibling());
 
-  return name;
+  return id;
 }
 
 /**
  * returns a widget specified by the name
  */
-widget vstdom::getWidget( std::string name)
+widget* vstdom::getWidget( std::string id)
 {
-  widget    widgetElement;
+  widget    *widgetElement = new widget();
   int       temp = 0;
 
   DOMNodeList *widgetlist = doc->getElementsByTagName( XMLString::transcode( "widget"));
-  if( widgetlist->getLength() <= 0)         // No widget found
+  if( widgetlist->getLength() == 0)         // No widget found
   {
-    return widgetElement;
+    return NULL;
   }  
 
   do
@@ -287,12 +334,14 @@ widget vstdom::getWidget( std::string name)
     DOMElement *domWidget = ( DOMElement *) widgetlist->item( (XMLSize_t) temp);
       
     // passende Widget gefunden
-    if (!strcmp(XMLString::transcode( domWidget->getAttribute(XMLString::transcode( "name"))), name.c_str()))
+    if( !id.compare( XMLString::transcode( domWidget->getAttribute(XMLString::transcode( "id")))))
     {
       // Attribute zuordnen
-      widgetElement._sId     = XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "name")));
-      widgetElement._sType   = XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "type")));
-      widgetElement._sUiType = XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "uiType")));
+      widgetElement->_sId     = XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "id")));
+      widgetElement->_sType   = XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "type")));
+      widgetElement->_sUiType = XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "uiType")));
+
+      widgetElement->_eWidgetType = sTypeToEnum( widgetElement->_sType);
 
       DOMNodeList *propertiesList    = domWidget->getElementsByTagName( XMLString::transcode( "properties"));
       DOMElement  *propertiesElement = ( DOMElement *) propertiesList->item(0);
@@ -310,38 +359,50 @@ widget vstdom::getWidget( std::string name)
         propertyChild   = ( DOMCharacterData *) propertyElement->getFirstChild();
         
         propertyType = XMLString::transcode( propertyElement->getAttribute( XMLString::transcode( "name")));
-        
-        if( !strcmp( propertyType.c_str(), "width"))
+      
+        if( !propertyType.compare( "width"))
         {
-          widgetElement._iWidth = stringTo<int>(XMLString::transcode( propertyChild->getData()));
+          widgetElement->_iWidth = stringTo<int>(XMLString::transcode( propertyChild->getData()));
         }
-        if( !strcmp( propertyType.c_str(), "height"))
+        if( !propertyType.compare( "height"))
         {
-          widgetElement._iHeight = stringTo<int>(XMLString::transcode( propertyChild->getData()));
+          widgetElement->_iHeight = stringTo<int>(XMLString::transcode( propertyChild->getData()));
         }
-        if( !strcmp( propertyType.c_str(), "xCoord"))
+        if( !propertyType.compare( "xCoord"))
         {
-          widgetElement._iXCoord = stringTo<int>(XMLString::transcode( propertyChild->getData()));
+          widgetElement->_iXCoord = stringTo<int>(XMLString::transcode( propertyChild->getData()));
         }
-        if( !strcmp( propertyType.c_str(), "yCoord"))
+        if( !propertyType.compare( "yCoord"))
         {
-          widgetElement._iYCoord = stringTo<int>(XMLString::transcode( propertyChild->getData()));
+          widgetElement->_iYCoord = stringTo<int>(XMLString::transcode( propertyChild->getData()));
         }
-        if( !strcmp( propertyType.c_str(), "title"))
+        if( !propertyType.compare( "title"))
         {
-          widgetElement._sTitle = XMLString::transcode( propertyChild->getData());
+          widgetElement->_sTitle = XMLString::transcode( propertyChild->getData());
         }
-        if( !strcmp( propertyType.c_str(), "text"))
+        if( !propertyType.compare( "text"))
         {
-          widgetElement._sText = XMLString::transcode( propertyChild->getData());
+          widgetElement->_sText = XMLString::transcode( propertyChild->getData());
         }
-        if( !strcmp( propertyType.c_str(), "checked"))
+        if( !propertyType.compare( "Search"))
         {
-          widgetElement._bchecked = stringTo<bool>(XMLString::transcode( propertyChild->getData()));
+          widgetElement->_sSearch = XMLString::transcode( propertyChild->getData());
         }
-        if( !strcmp( propertyType.c_str(), "mnemonic"))
+        if( !propertyType.compare( "mnemonic"))
         {
-          widgetElement._sMnemonic = XMLString::transcode( propertyChild->getData());
+          widgetElement->_sMnemonic = XMLString::transcode( propertyChild->getData());
+        }
+        if( !propertyType.compare( "checked"))
+        {
+          widgetElement->_bchecked = stringTo<bool>(XMLString::transcode( propertyChild->getData()));
+        }
+        if( !propertyType.compare( "editable"))
+        {
+          widgetElement->_bEditable = stringTo<bool>(XMLString::transcode( propertyChild->getData()));
+        }
+        if( !propertyType.compare( "isScrollable"))
+        {
+          widgetElement->_bIsScrollable = stringTo<bool>(XMLString::transcode( propertyChild->getData()));
         }
         propertyNr++;
       }
@@ -349,11 +410,7 @@ widget vstdom::getWidget( std::string name)
       // Get the names of all ChildWidgets
       DOMNodeList *childwidgetlist = domWidget->getElementsByTagName( XMLString::transcode( "widget"));
 
-      if( childwidgetlist->getLength() <= 0)         // No widget found
-      {
-        cout << endl << "no child found";
-      }
-      else 
+      if( !(childwidgetlist->getLength() <= 0))         // No widget found
       {
         DOMElement *childWidget = (DOMElement *) childwidgetlist->item(0);
   
@@ -361,20 +418,10 @@ widget vstdom::getWidget( std::string name)
         {
           if( childWidget->getNodeType() == DOMNode::ELEMENT_NODE)
           {
-            // cout << endl << "name of childwidget " << XMLString::transcode( childWidget->getAttribute( XMLString::transcode( "name")));
-            widgetElement._vChildWidgets.push_back(XMLString::transcode( childWidget->getAttribute( XMLString::transcode( "name"))));
+            widgetElement->_vChildWidgets.push_back(XMLString::transcode( childWidget->getAttribute( XMLString::transcode("id"))));
           }
         } while( childWidget = (DOMElement *) childWidget->getNextSibling());
       }
-
-
-/*
-        cout << endl << "Attribute name is       " << XMLString::transcode( propertyElement->getAttribute( XMLString::transcode( "name")));
-        cout << endl << "propertyChild.getData() " << XMLString::transcode( propertyChild->getData());
-        int x = stringTo<int>(XMLString::transcode( propertyChild->getData()));
-        cout << endl << "and the value casted    " << x;
-        cout << endl;
-*/
 
       return widgetElement;
     }

@@ -2,10 +2,13 @@
 
 #include "vstdom.hpp"
 
+void parseWidget(vstdom *dom, widget *wid);
+
 int main( int argC, char *argV[])
 {
   // vstdom mit xml file initiieren
-  vstdom *testvstdom = new vstdom("xml/beispiel.xml");
+  vstdom *testvstdom = new vstdom("xml/formular_test.xml");
+  // vstdom *testvstdom = new vstdom("xml/beispiel.xml");
 
   // xmlfile parsen lassen
   testvstdom->parse();
@@ -13,61 +16,73 @@ int main( int argC, char *argV[])
   // Anzahl der root Elemente ermitteln
   cout << endl << "Anzahl der root Widget " << testvstdom->getNumberOfChildWidget() << endl;  
 
-  cout << endl << "Name vom root Widget " << (testvstdom->getNameOfRootWidget(0)).c_str() << endl;
-  
-  // Anzahl der ChildElemente
-  cout << endl << (testvstdom->getNameOfRootWidget(0)).c_str()
-               << " hat so viele Kinder " 
-               << testvstdom->getNumberOfChildWidget((testvstdom->getNameOfRootWidget(0)).c_str())
-               << endl;
-
-  // Get Widget Element
-  widget testwidget = testvstdom->getWidget((testvstdom->getNameOfRootWidget(0)).c_str());
-  // widget testwidget = testvstdom->getWidget("CheckBox1");
-  // widget testwidget = testvstdom->getWidget("FileMenu");
-  // widget testwidget = testvstdom->getWidget("Knopf");
-
-  cout << endl << "Properties of    " << testwidget._sId.c_str()
-       << endl << "id               " << testwidget._sId.c_str()
-       << endl << "height           " << testwidget._iHeight
-       << endl << "width            " << testwidget._iWidth
-       << endl << "title            " << testwidget._sTitle.c_str()
-       << endl << "text             " << testwidget._sText.c_str()
-       << endl << "xCoord           " << testwidget._iXCoord
-       << endl << "yCoord           " << testwidget._iYCoord
-       << endl << "type             " << testwidget._sType.c_str()
-       << endl << "number of Childs " << testwidget._vChildWidgets.size()
-       << endl;
-
-  cout << endl << "Behandlung untergeordneter Widgets"
-       << endl << "Anzahl " << testwidget._vChildWidgets.size();
-
-  widget testchildwidget;
-
-  for( int i = 0; i < testwidget._vChildWidgets.size(); i++)
+  for( int i = 0; i < testvstdom->getNumberOfChildWidget(); i++)
   {
-    cout << endl << "Name of the " << i + 1 << ". ChildWidget of " 
-         << testwidget._sId.c_str() << " " << (testwidget._vChildWidgets.at(i)).c_str();
-    
-    testchildwidget = testvstdom->getWidget((testwidget._vChildWidgets.at(i)).c_str());
-    cout << endl << "Properties of    " << testchildwidget._sId.c_str()
-         << endl << "id               " << testchildwidget._sId.c_str()
-         << endl << "height           " << testchildwidget._iHeight
-         << endl << "width            " << testchildwidget._iWidth
-         << endl << "title            " << testchildwidget._sTitle.c_str()
-         << endl << "text             " << testchildwidget._sText.c_str()
-         << endl << "xCoord           " << testchildwidget._iXCoord
-         << endl << "yCoord           " << testchildwidget._iYCoord
-         << endl << "type             " << testchildwidget._sType.c_str()
-         << endl << "number of Childs " << testchildwidget._vChildWidgets.size()
-         << endl;
+    widget *rootwidget = testvstdom->getWidget(testvstdom->getNameOfRootWidget(i));
+  
+    // Ausgabe aller Elemente (rekursiv)
+    parseWidget(testvstdom, rootwidget);
   }
-
-
-  // testvstdom->writexml("xml/neu.xml");
-
+  
   delete testvstdom;
 
   cout << "\n" << flush;
   return 0;
+}
+
+static int depth = 0;
+
+void parseWidget(vstdom *dom, widget *wid)
+{
+  std::string einrueckung;
+  int a = 0;
+  while( a < depth)
+  {
+    einrueckung += "|";
+    a++;
+  }
+  
+  // eineindeutige ID 
+  cout << endl << einrueckung.c_str() << " Widget ID " << wid->_sId.c_str();
+  cout << endl << einrueckung.c_str();
+
+  // Properties
+  cout << endl << einrueckung.c_str() << " Properties";
+  cout << endl << einrueckung.c_str() << " width    " << wid->_iWidth;
+  cout << endl << einrueckung.c_str() << " height   " << wid->_iHeight;
+  cout << endl << einrueckung.c_str() << " xCoord   " << wid->_iXCoord;
+  cout << endl << einrueckung.c_str() << " yCoord   " << wid->_iYCoord;
+  cout << endl << einrueckung.c_str() << " title    " << wid->_sTitle.c_str();
+  cout << endl << einrueckung.c_str() << " text     " << wid->_sText.c_str();
+  cout << endl << einrueckung.c_str() << " editable " << wid->_bEditable;
+  cout << endl << einrueckung.c_str() << " checked  " << wid->_bchecked;
+  cout << endl << einrueckung.c_str();
+
+  switch( wid->_eWidgetType)
+  {
+  case window:
+    {
+      cout << "\n## window gefunden";
+      break;
+    }
+  case button:
+    {
+      cout << "\n## button gefunden";
+    }
+  }
+  
+  // Rekursiv über alle Childs
+  cout << endl << einrueckung.c_str() << " " << wid->_sId.c_str() << " hat " << wid->_vChildWidgets.size() << " Childwidgets.";
+  for( int i = 0; i < wid->_vChildWidgets.size(); i++)
+  {
+    cout << endl << einrueckung.c_str();
+    cout << endl << einrueckung.c_str() << " " << i << ". Childwidget von " << wid->_sId.c_str() << " ist " << wid->_vChildWidgets.at(i);
+    widget *childwidget = dom->getWidget( wid->_vChildWidgets.at(i));
+    if( childwidget != NULL)
+    {
+      depth++;
+      parseWidget(dom, childwidget);
+      depth--;
+    }
+  }
 }

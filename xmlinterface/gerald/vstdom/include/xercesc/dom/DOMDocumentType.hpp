@@ -59,7 +59,7 @@
  */
 
 /*
- * $Id: DOMDocumentType.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
+ * $Id: DOMDocumentType.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
  */
 
 #include <xercesc/util/XercesDefs.hpp>

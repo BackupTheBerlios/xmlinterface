@@ -56,8 +56,8 @@
 
  /*
   * $Log: MemoryManager.hpp,v $
-  * Revision 1.2  2004/05/26 20:55:08  geraschna
-  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+  * Revision 1.3  2004/06/03 20:45:20  geraschna
+  * alle Änderungen zum 3.6. übernommen
   *
   * Revision 1.2  2003/04/27 17:17:01  jberry
   * Add include for stdlib to pull in size_t declaration

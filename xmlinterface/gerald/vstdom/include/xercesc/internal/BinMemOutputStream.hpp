@@ -55,10 +55,10 @@
  */
 
 /*
- * $Id: BinMemOutputStream.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
+ * $Id: BinMemOutputStream.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
  * $Log: BinMemOutputStream.hpp,v $
- * Revision 1.2  2004/05/26 20:55:08  geraschna
- * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
+ * Revision 1.3  2004/06/03 20:45:20  geraschna
+ * alle Änderungen zum 3.6. übernommen
  *
  * Revision 1.2  2004/02/16 04:02:34  neilg
  * fix for bug 26936

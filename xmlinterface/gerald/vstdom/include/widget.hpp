@@ -4,13 +4,28 @@
 #include <string>
 #include <vector>
 
+// Possible Widget Types
+enum Types
+{
+    button,
+    window,
+    Menu,
+    menubar,
+    MenuItem,
+    textfield,
+    checkbox,
+    combobox,
+    comboboxElement
+};
+
 class widget
 {
 public:
   // Attributes
-  std::string _sId;
-  std::string _sType;
-  std::string _sUiType;
+  std::string   _sId;
+  std::string   _sType;
+  std::string   _sUiType;
+  enum Types    _eWidgetType;
 	
   // Properties
   int         _iWidth; 
@@ -20,12 +35,15 @@ public:
   std::string _sTitle;
   std::string _sText;
   std::string _sMnemonic;
+  std::string _sSearch;
   bool        _bchecked;
   bool        _bIsScrollable;
+  bool        _bEditable;
 
   // Child widgets specified by name
-  std::vector<std::string> _vChildWidgets;
-
+  // std::vector<std::string>  _vChildWidgets;
+  std::vector<char *>  _vChildWidgets;
+  
   /**
    * Constructor initialize all Properties empty
    */
