@@ -78,28 +78,9 @@ int main (int argC, char *argV[])
     DOMErrorHandler *myErrorHandler = new DOMPrintErrorHandler();
     theSerializer->setErrorHandler(myErrorHandler);
 
-    // set feature if the serializer supports the feature/mode
-    /*
-    if (theSerializer->canSetFeature(XMLUni::fgDOMWRTSplitCdataSections, gSplitCdataSections))
-        theSerializer->setFeature(XMLUni::fgDOMWRTSplitCdataSections, gSplitCdataSections);
-
-    if (theSerializer->canSetFeature(XMLUni::fgDOMWRTDiscardDefaultContent, gDiscardDefaultContent))
-        theSerializer->setFeature(XMLUni::fgDOMWRTDiscardDefaultContent, gDiscardDefaultContent);
-
-    if (theSerializer->canSetFeature(XMLUni::fgDOMWRTFormatPrettyPrint, gFormatPrettyPrint))
-        theSerializer->setFeature(XMLUni::fgDOMWRTFormatPrettyPrint, gFormatPrettyPrint);
-
-    if (theSerializer->canSetFeature(XMLUni::fgDOMWRTBOM, gWriteBOM))
-        theSerializer->setFeature(XMLUni::fgDOMWRTBOM, gWriteBOM);
-    */
-    //
-    // Plug in a format target to receive the resultant
-    // XML stream from the serializer.
-    //
     // StdOutFormatTarget prints the resultant XML stream
     // to stdout once it receives any thing from the serializer.
     //
-
     XMLFormatTarget *myFormTarget;
     myFormTarget = new LocalFileFormatTarget("geaender.xml");
     // myFormTarget = new StdOutFormatTarget();
