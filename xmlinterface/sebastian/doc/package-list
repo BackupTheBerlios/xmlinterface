@@ -1,5 +1,6 @@
 de.fhtw.xgl.example
 de.fhtw.xgl.interpreter
 de.fhtw.xgl.interpreter.swing
+de.fhtw.xgl.interpreter.swing.guiEditor
 de.fhtw.xgl.interpreter.swing.widgets
 de.fhtw.xgl.interpreter.widgets
