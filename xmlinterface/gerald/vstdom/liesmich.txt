@@ -1,0 +1,16 @@
+Dateien:
+
+include/widget.hpp
+
+angelehnt an das widget.java interface. Enthält alle Daten eines Widget aus dem XML-File.
+ChildWidget werden über einen vector, welcher die Child id's enthält referenziert.
+
+
+include/vstdom.hpp
+
+alle Funktionen zum auslesen des xml-files.
+
+
+vstdomsample.cpp
+
+Beispiel für das auslesen des xml-files mittels der vstdom Klasse
