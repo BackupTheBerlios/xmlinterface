@@ -10,8 +10,8 @@ int main( int argC, char *argV[])
   vstdom *testvstdom = new vstdom("xml/formular_test.xml");
   // vstdom *testvstdom = new vstdom("xml/beispiel.xml");
 
-  // xmlfile parsen lassen
-  testvstdom->parse();
+  // leere Instanz von vstdom erzeugen
+  vstdom *testnew = new vstdom();
 
   // Anzahl der root Elemente ermitteln
   cout << endl << "Anzahl der root Widget " << testvstdom->getNumberOfChildWidget() << endl;  
@@ -29,7 +29,7 @@ int main( int argC, char *argV[])
   // definiere neues Widget
   widget updatedWidget;
   updatedWidget._iId = 8;
-  updatedWidget._eWidgetType = button;
+  updatedWidget._eWidgetType = kbutton;
   updatedWidget._iWidth = 100;
   updatedWidget._iHeight = 50;
   updatedWidget._iXCoord = 10;
@@ -41,7 +41,7 @@ int main( int argC, char *argV[])
   testvstdom->updateWidget( updatedWidget, updatedWidget._iId);
 
   widget newWidget;
-  newWidget._eWidgetType = window;
+  newWidget._eWidgetType = kwindow;
   newWidget._iId = 88;
   newWidget._iCallbackId = 120;
   newWidget._iHeight = 43;
@@ -55,10 +55,11 @@ int main( int argC, char *argV[])
   newWidget._sTitle = "Keine Ahnung";
   newWidget._sText = "Text-O-Text";
 
-  testvstdom->addWidget(newWidget);
-
+  // testvstdom->addWidget(newWidget);
+  testnew->addWidget(newWidget);
+  
   widget newWidgetZwei;
-  newWidgetZwei._eWidgetType = label;
+  newWidgetZwei._eWidgetType = klabel;
   newWidgetZwei._iId = 10;
   newWidgetZwei._iCallbackId = 12;
   newWidgetZwei._iHeight = 4;
@@ -76,6 +77,7 @@ int main( int argC, char *argV[])
   
   // schreibe neues xml File
   testvstdom->writexml( "neues_xml.xml");
+  testnew->writexml("newxml.xml");
   
   delete testvstdom;
 
@@ -113,16 +115,14 @@ void parseWidget(vstdom *dom, widget *wid)
   cout << endl << einrueckung.c_str() << " Callback " << wid->_iCallbackId;
   cout << endl << einrueckung.c_str();
 
-  
-
   switch( wid->_eWidgetType)
   {
-  case window:
+  case kwindow:
     {
       cout << "\n## window gefunden";
       break;
     }
-  case button:
+  case kbutton:
     {
       cout << "\n## button gefunden";
     }

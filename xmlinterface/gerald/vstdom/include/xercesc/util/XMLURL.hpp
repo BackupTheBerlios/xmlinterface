@@ -55,7 +55,7 @@
  */
 
 /*
- * $Id: XMLURL.hpp,v 1.3 2004/06/03 20:45:21 geraschna Exp $
+ * $Id: XMLURL.hpp,v 1.4 2004/07/02 19:38:27 geraschna Exp $
  */
 
 #if !defined(XMLURL_HPP)

@@ -7,16 +7,16 @@
 // Possible Widget Types
 enum Types
 {
-  label,
-  button,
-  window,
-  Menu,
-  menubar,
-  MenuItem,
-  textfield,
-  checkbox,
-  combobox,
-  comboboxElement
+  klabel,
+  kbutton,
+  kwindow,
+  kMenu,
+  kmenubar,
+  kMenuItem,
+  ktextfield,
+  kcheckbox,
+  kcombobox,
+  kcomboboxElement
 };
 
 class widget

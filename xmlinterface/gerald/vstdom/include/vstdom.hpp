@@ -40,11 +40,6 @@ public:
   ~vstdom();
 
   /** 
-   * parse the xml
-   */
-  bool parse();
-
-  /** 
    * writes the xml DOM-Tree to a file
    */
   bool writexml( char *xmlfile);
@@ -79,12 +74,19 @@ public:
    * change the values of an existing Widget
    */
   bool updateWidget( widget changedWidget, int idOfWidget);
+
+private:
+  /** 
+   * parse the xml
+   */
+  bool parse();
   
 private :
   char                      *xmlfile; // die xml-Datei mit der GUI
   xercesc::DOMDocument      *doc;
   xercesc::XercesDOMParser  *parser;
-  xercesc::ErrorHandler     *errHandler;    
+  xercesc::ErrorHandler     *errHandler;  
+  xercesc::DOMImplementation *impl;
 };
 
 

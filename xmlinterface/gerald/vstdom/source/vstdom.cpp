@@ -2,6 +2,7 @@
 #include <iostream.h>
 
 #include "vstdom.hpp"
+#include "utils.hpp"
 
 /**
  * Converting from string to anything
@@ -24,117 +25,6 @@ template<typename T> std::string toString(const T& x)
   return oss.str();
 }
 
-/** 
- * Converting boolean to string
- */
-std::string boolToString(bool val)
-{
-  std::string retVal;
-  if( val) {
-    retVal = "true";
-  }
-  else {
-    retVal = "false";
-  }
-  return retVal;
-}
-
-/**
- * Returns the corresponding string of the given Types Enumeration
- */
-std::string enumToString( enum Types eType)
-{
-  std::string retValue;
-
-  switch( eType) {
-  case button:
-    retValue = "button";
-    break;
-  case window:
-    retValue = "window";
-    break;
-  case Menu:
-    retValue = "Menu";
-    break;
-  case menubar:
-    retValue = "menubar";
-    break;
-  case MenuItem:
-    retValue = "MenuItem";
-    break;
-  case textfield:
-    retValue = "textfield";
-    break;
-  case checkbox:
-    retValue = "checkbox";
-    break;
-  case combobox:
-    retValue = "combobox";
-    break;
-  case comboboxElement:
-    retValue = "comboboxElement";
-    break;
-  case label:
-    retValue = "label";
-    break;
-  default:
-    retValue = "type not defined";
-  }
-  return retValue;
-}
-
-/**
- * Returns the int Value of the Types Enumaration
- */
-enum Types sTypeToEnum( const std::string& s)
-{
-  enum Types type = button; // default 0 
-
-  if( !s.compare( "window" ))
-  {
-    type = window;
-  }
-  if( !s.compare( "Menu" ))
-  {
-    type = Menu;
-  }
-  if( !s.compare( "menubar" ))
-  {
-    type = menubar;
-  }
-  if( !s.compare( "MenuItem" ))
-  {
-    type = MenuItem;
-  }
-  if( !s.compare( "textfield" ))
-  {
-    type = textfield;
-  }
-  if( !s.compare( "checkbox" ))
-  {
-    type = checkbox;
-  }
-  if( !s.compare( "combobox" ))
-  {
-    type = combobox;
-  }
-  if( !s.compare( "comboboxElement" ))
-  {
-    type = comboboxElement;
-  }
-  if( !s.compare( "button" ))
-  {
-    type = button;
-  }
-  if( !s.compare( "label" ))
-  {
-    type = label;
-  }
-
-
-  return type;
-}
-
 /**
  * Standard Constructor 
  */
@@ -152,6 +42,50 @@ vstdom::vstdom()
          << message << "\n";
     XMLString::release( &message);
   }
+
+  impl = DOMImplementationRegistry::getDOMImplementation(XMLString::transcode("Core"));
+  int errorCode = 0;
+  if (impl != NULL) {
+    try {
+     doc = impl->createDocument(
+                 0,                    // root element namespace URI.
+                 XMLString::transcode("xmlgui"),         // root element name
+                 0);                   // document type object (DTD).
+
+     DOMElement* rootElem = doc->getDocumentElement();
+
+     DOMElement*  prodElem = doc->createElement(XMLString::transcode("widgets"));
+     rootElem->appendChild(prodElem);
+
+     
+     rootElem->setAttribute(XMLString::transcode("magic"), XMLString::transcode("enable"));
+     rootElem->setAttribute(XMLString::transcode("xmlns:xsi"), XMLString::transcode("http://www.w3.org/2001/XMLSchema-instance"));
+
+     //
+     // Now count the number of elements in the above DOM tree.
+     //
+
+     unsigned int elementCount = doc->getElementsByTagName(XMLString::transcode("*"))->getLength();
+     XERCES_STD_QUALIFIER cout << "The tree just created contains: " << elementCount
+          << " elements." << XERCES_STD_QUALIFIER endl;
+
+   }
+   catch (const DOMException& e)
+   {
+     XERCES_STD_QUALIFIER cerr << "DOMException code is:  " << e.code << XERCES_STD_QUALIFIER endl;
+     errorCode = 2;
+   }
+   catch (...)
+   {
+     XERCES_STD_QUALIFIER cerr << "An error occurred creating the document" << XERCES_STD_QUALIFIER endl;
+     errorCode = 3;
+   }
+ }  // (inpl != NULL)
+ else
+ {
+     XERCES_STD_QUALIFIER cerr << "Requested implementation is not supported" << XERCES_STD_QUALIFIER endl;
+     errorCode = 4;
+ }
 
   xmlfile = "";
 }
@@ -174,6 +108,8 @@ vstdom::vstdom( char *guixmlfile)
          << message << "\n";
     XMLString::release( &message);
   }
+
+  parse();
 }
 
 /**

@@ -56,8 +56,17 @@
 
 /*
  * $Log: MsgCatalogLoader.hpp,v $
- * Revision 1.3  2004/06/03 20:45:21  geraschna
- * alle Änderungen zum 3.6. übernommen
+ * Revision 1.4  2004/07/02 19:38:28  geraschna
+ * 02.07.2004
+ *
+ * - Parameterloser Konstruktor funktioniert jetzt mit allen Kopfdaten. Danach könnte theoretisch
+ *   gleich writexml() aufgerufen werden
+ * - Konstruktor mit Angabe der XML Datei von vstdom verändert, bei Angabe einer XML-Datei muss
+ *   im Anschluss nicht mehr parse() aufgerufen werden.
+ * - parse() Funktion jetzt nur noch als private deklariert
+ * - Hilfsfunktionen in utils.cpp und utils.hpp ausgelagert, bis auf die beiden template Funktionen, da hat das
+ *   irgendwie nicht funktioniert
+ * - Änderung der enum name mit vorgestelltem k (von Robert übernommen)
  *
  * Revision 1.7  2003/12/24 15:24:13  cargilld
  * More updates to memory management so that the static memory manager.

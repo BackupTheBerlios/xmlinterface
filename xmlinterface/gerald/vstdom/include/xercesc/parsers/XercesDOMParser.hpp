@@ -55,7 +55,7 @@
  */
 
 /*
- * $Id: XercesDOMParser.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
+ * $Id: XercesDOMParser.hpp,v 1.4 2004/07/02 19:38:26 geraschna Exp $
  *
  */
 

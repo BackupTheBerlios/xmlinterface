@@ -56,8 +56,17 @@
 
 /*
  * $Log: XObjectComparator.hpp,v $
- * Revision 1.3  2004/06/03 20:45:20  geraschna
- * alle Änderungen zum 3.6. übernommen
+ * Revision 1.4  2004/07/02 19:38:26  geraschna
+ * 02.07.2004
+ *
+ * - Parameterloser Konstruktor funktioniert jetzt mit allen Kopfdaten. Danach könnte theoretisch
+ *   gleich writexml() aufgerufen werden
+ * - Konstruktor mit Angabe der XML Datei von vstdom verändert, bei Angabe einer XML-Datei muss
+ *   im Anschluss nicht mehr parse() aufgerufen werden.
+ * - parse() Funktion jetzt nur noch als private deklariert
+ * - Hilfsfunktionen in utils.cpp und utils.hpp ausgelagert, bis auf die beiden template Funktionen, da hat das
+ *   irgendwie nicht funktioniert
+ * - Änderung der enum name mit vorgestelltem k (von Robert übernommen)
  *
  * Revision 1.2  2003/10/31 22:15:42  peiyongz
  * dumpContent
@@ -65,7 +74,7 @@
  * Revision 1.1  2003/10/29 16:14:15  peiyongz
  * XObjectComparator/XTemplateComparator
  *
- * $Id: XObjectComparator.hpp,v 1.3 2004/06/03 20:45:20 geraschna Exp $
+ * $Id: XObjectComparator.hpp,v 1.4 2004/07/02 19:38:26 geraschna Exp $
  *
  */
 

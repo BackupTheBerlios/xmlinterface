@@ -55,7 +55,7 @@
  */
 
 /*
- * $Id: XMLUniDefs.hpp,v 1.3 2004/06/03 20:45:21 geraschna Exp $
+ * $Id: XMLUniDefs.hpp,v 1.4 2004/07/02 19:38:27 geraschna Exp $
  */
 #if !defined(XMLUNIDEFS_HPP)
 #define XMLUNIDEFS_HPP
