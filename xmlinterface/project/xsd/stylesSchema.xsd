@@ -29,13 +29,6 @@
 	</xsd:complexType>
 	<xsd:complexType name="uiType">
 		<xsd:sequence>
-			<xsd:element name="foreground" minOccurs="0">
-				<xsd:complexType>
-					<xsd:complexContent>
-						<xsd:extension base="foreground"/>
-					</xsd:complexContent>
-				</xsd:complexType>
-			</xsd:element>
 			<xsd:element name="background" minOccurs="0">
 				<xsd:complexType>
 					<xsd:complexContent>
@@ -50,20 +43,6 @@
 					</xsd:complexContent>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:element name="width" minOccurs="0">
-				<xsd:complexType>
-					<xsd:complexContent>
-						<xsd:extension base="width"/>
-					</xsd:complexContent>
-				</xsd:complexType>
-			</xsd:element>
-			<xsd:element name="height" minOccurs="0">
-				<xsd:complexType>
-					<xsd:complexContent>
-						<xsd:extension base="height"/>
-					</xsd:complexContent>
-				</xsd:complexType>
-			</xsd:element>
 			<xsd:element name="border" minOccurs="0">
 				<xsd:complexType>
 					<xsd:complexContent>
@@ -72,19 +51,8 @@
 				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
 		<xsd:attribute name="type" type="xsd:string" use="required"/>
-	</xsd:complexType>
-	<xsd:complexType name="foreground">
-		<xsd:sequence>
-			<xsd:element name="color" minOccurs="1" maxOccurs="1">
-				<xsd:complexType>
-					<xsd:simpleContent>
-						<xsd:extension base="color"/>
-					</xsd:simpleContent>
-				</xsd:complexType>
-			</xsd:element>
-		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="background">
 		<xsd:sequence>
@@ -106,17 +74,10 @@
 					</xsd:simpleContent>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:element name="width">
+			<xsd:element name="size">
 				<xsd:complexType>
 					<xsd:simpleContent>
-						<xsd:extension base="width"/>
-					</xsd:simpleContent>
-				</xsd:complexType>
-			</xsd:element>
-			<xsd:element name="height">
-				<xsd:complexType>
-					<xsd:simpleContent>
-						<xsd:extension base="height"/>
+						<xsd:extension base="size"/>
 					</xsd:simpleContent>
 				</xsd:complexType>
 			</xsd:element>
@@ -145,10 +106,10 @@
 					</xsd:simpleContent>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:element name="type">
+			<xsd:element name="borderType">
 				<xsd:complexType>
 					<xsd:simpleContent>
-						<xsd:extension base="type"/>
+						<xsd:extension base="borderType"/>
 					</xsd:simpleContent>
 				</xsd:complexType>
 			</xsd:element>
@@ -159,14 +120,19 @@
 			<xsd:extension base="__color"/>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:complexType name="size">
+		<xsd:simpleContent>
+			<xsd:extension base="__size"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<xsd:complexType name="width">
 		<xsd:simpleContent>
 			<xsd:extension base="__width"/>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:complexType name="height">
+	<xsd:complexType name="borderType">
 		<xsd:simpleContent>
-			<xsd:extension base="__height"/>
+			<xsd:extension base="__borderType"></xsd:extension>
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:complexType name="type">
@@ -201,6 +167,11 @@
 					<xsd:documentation xml:lang="en">BLACK COLOR</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
+			<xsd:enumeration value="grey">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">GREY COLOR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="white">
 				<xsd:annotation>
 					<xsd:documentation xml:lang="en">WHITE COLOR</xsd:documentation>
@@ -208,13 +179,32 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="__width">
+	<xsd:simpleType name="__borderType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="line">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">BORDER is a LINE (_____)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="dot-line">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">BORDER is a DOT-LINE (._._._.)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="dotted">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">BORDER is a lot of DOTS (.........)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="__size">
 		<xsd:restriction base="xsd:int">
 			<xsd:minLength value="1"/>
 			<xsd:maxLength value="4"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="__height">
+	<xsd:simpleType name="__width">
 		<xsd:restriction base="xsd:int">
 			<xsd:minLength value="1"/>
 			<xsd:maxLength value="4"/>
