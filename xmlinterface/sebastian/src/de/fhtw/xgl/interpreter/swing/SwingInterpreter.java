@@ -8,10 +8,14 @@ package de.fhtw.xgl.interpreter.swing;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+// Util-imports
+import java.util.HashMap;
 // Project-imports
-import de.fhtw.xgl.interpreter.CallbackHandler;
-import de.fhtw.xgl.interpreter.Callback;
 import de.fhtw.xgl.interpreter.XglInterpreterException;
+import de.fhtw.xgl.interpreter.CallbackHandler;
+import de.fhtw.xgl.interpreter.swing.widgets.SwingWindow;
+import de.fhtw.xgl.interpreter.Widget;
+
 
 /**
  * @author Administrator
@@ -22,6 +26,8 @@ public class SwingInterpreter implements de.fhtw.xgl.interpreter.Interpreter
 	
 	private CallbackHandler cbh = null;
 	
+	private HashMap widgets = null;
+	
 	/**
 	 * Constructs a standard-interpreter without a CallbackHandler.  
 	 *
@@ -30,20 +36,20 @@ public class SwingInterpreter implements de.fhtw.xgl.interpreter.Interpreter
 	{
 		this(null);
 	}
-	
+
 	/**
-	 * Constructs a standard-interpreter without a CallbackHandler.  
-	 * 
-	 * @param cbh CallbackHanlder-object
+	 * Constructs a <code>SwingInterpreter<code> without the given CallbackHandler.  
+	 *
 	 */
 	public SwingInterpreter(CallbackHandler cbh)
 	{
 		this.cbh = cbh;
+		widgets = new HashMap();
 	}
 	
-	public void sendCallback(Callback callback)
+	public void handleEvent(Widget w)
 	{
-		if (cbh != null) cbh.handleCallback(callback);
+		cbh.handleCallback(w);
 	}
 	
 	public void parseDocument(Document doc) throws XglInterpreterException
@@ -53,12 +59,52 @@ public class SwingInterpreter implements de.fhtw.xgl.interpreter.Interpreter
 		NodeList nl = doc.getFirstChild().getChildNodes();
 		for (int i = 0; i < nl.getLength(); i++)
 		{
-			if (nl.item(i).getNodeType() == Node.ELEMENT_NODE)
+			if (nl.item(i).getNodeType() == Node.ELEMENT_NODE && nl.item(i).getNodeName().equals(XML_ELEMENT_WIDGETS))
 			{
-				Window w = new Window(nl.item(i), this);
-				w.setVisible(true);
+				Node n = nl.item(i);
+				NodeList nl1 = n.getChildNodes();
+				for (int j = 0; j < nl1.getLength(); j++)
+				{
+					if (nl1.item(j).getNodeType() == Node.ELEMENT_NODE)
+					{
+						SwingWindow w = new SwingWindow(nl1.item(j), this);
+						w.setVisible(true);
+					}
+				}
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Interpreter#setCallbackHandler(de.fhtw.xgl.interpreter.CallbackHandler)
+	 */
+	public void setCallbackHandler(CallbackHandler cbh)
+	{
+		this.cbh = cbh;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Interpreter#getCallbackHandler()
+	 */
+	public CallbackHandler getCallbackHandler()
+	{
+		return cbh;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Interpreter#getWidgetById(java.lang.String)
+	 */
+	public Widget getWidgetById(int id)
+	{
+		return (Widget)widgets.get(new Integer(id));
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Interpreter#addWidget(java.lang.String, de.fhtw.xgl.interpreter.Widget)
+	 */
+	public void addWidget(int id, Widget w)
+	{
+		widgets.put(new Integer(id), w);
 	}
 		
 		
