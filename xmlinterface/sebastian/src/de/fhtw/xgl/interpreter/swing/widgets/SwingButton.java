@@ -173,8 +173,6 @@ public class SwingButton extends
 
 		el.appendChild(storeProperties(doc));
 
-		el.appendChild(storeEvents(doc));
-
 		return el;
 	}
 	
@@ -215,13 +213,6 @@ public class SwingButton extends
 			elProperty.appendChild(doc.createTextNode(""));
 		el.appendChild(elProperty);
 		
-		return el;
-	}
-
-	private Node storeEvents(Document doc)
-	{
-		Element el = doc.createElement(SwingInterpreter.XML_ELEMENT_EVENTS);
-
 		return el;
 	}
 
