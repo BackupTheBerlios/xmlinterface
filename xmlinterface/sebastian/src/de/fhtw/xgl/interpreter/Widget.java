@@ -7,11 +7,11 @@ package de.fhtw.xgl.interpreter;
 // XML-imports
 import org.w3c.dom.Node;
 import org.w3c.dom.Document;
-// AWT-imports
-import java.awt.Component;
 
 /**
- * @author Administrator
+ * Basic GUI-element. All widget are derived from this interface.
+ * 
+ * @author Sebastian Heide
  *
  */
 public interface Widget
@@ -33,6 +33,10 @@ public interface Widget
 	 * XML-attribute <code>uiType</code> of this object.
 	 */
 	public static final String XML_ATTRIBUTE_UI_TYPE = "uiType";
+	/**
+	 * XML-attribute <code>id</code> of this object.
+	 */
+	public static final String XML_ATTRIBUTE_ID = "id";
 
 	/**
 	 * <code>width</code>-attribute of a widget
@@ -63,7 +67,7 @@ public interface Widget
 	 * Stores the widget into an XML-Node
 	 * 
 	 * @param doc XML-Document of the node-object
-	 * @return
+	 * @return XML-Node of the Widget
 	 */
 	public Node store(Document doc);
 	
@@ -75,13 +79,33 @@ public interface Widget
 	public String getType();
 	
 	/**
-	 * Returns the <code>Component<code>-object for the widget
+	 * Sets the Interpreter of this widget.
 	 * 
-	 * @return Component-object for widget
+	 * @param i Interpreter to set
 	 */
-	public Component getComponent();
-	
 	public void setInterpreter(Interpreter i);
 	
+	/**
+	 * Sets the widget's size.
+	 * 
+	 * @param w width
+	 * @param h height
+	 */
+	public void setSize(int w, int h);
+
+	/**
+	 * Sets the widget's location relative to it's container.
+	 * 
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 */
+	public void setLocation(int x, int y);
+	
+	/**
+	 * Returns the widget's id.
+	 * 
+	 * @return id of the widget
+	 */
+	public int getId();
 
 }
