@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.0">
+	<xsd:element name="xmlgui-styles">
+		<xsd:annotation>
+			<xsd:documentation>Comment describing your root element</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="widget-styles" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="widget-styles"/>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="widget-styles">
+		<xsd:sequence>
+			<xsd:element name="uiType" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="uiType"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="uiType">
+		<xsd:sequence>
+			<xsd:element name="foreground" minOccurs="0">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="foreground"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="background" minOccurs="0">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="background"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="font" minOccurs="0">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="font"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="width" minOccurs="0">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="width"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="height" minOccurs="0">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="height"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="border" minOccurs="0">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="border"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="type" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="foreground">
+		<xsd:sequence>
+			<xsd:element name="color" minOccurs="1" maxOccurs="1">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="color"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="background">
+		<xsd:sequence>
+			<xsd:element name="color">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="color"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="font">
+		<xsd:sequence>
+			<xsd:element name="color">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="color"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="width">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="width"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="height">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="height"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="type">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="type"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="border">
+		<xsd:sequence>
+			<xsd:element name="color">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="color"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="width">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="width"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="type">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="type"/>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="color">
+		<xsd:simpleContent>
+			<xsd:extension base="__color"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="width">
+		<xsd:simpleContent>
+			<xsd:extension base="__width"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="height">
+		<xsd:simpleContent>
+			<xsd:extension base="__height"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="type">
+		<xsd:simpleContent>
+			<xsd:extension base="__type"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="__color">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="red">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">RED COLOR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="blue">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">BLUE COLOR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="green">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">GREEN COLOR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="yellow">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">YELLOW COLOR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="black">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">BLACK COLOR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="white">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">WHITE COLOR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="__width">
+		<xsd:restriction base="xsd:int">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="__height">
+		<xsd:restriction base="xsd:int">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="__type">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+			<xsd:whiteSpace value="preserve"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
