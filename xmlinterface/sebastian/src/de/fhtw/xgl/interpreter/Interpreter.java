@@ -68,7 +68,11 @@ public interface Interpreter
 	/**
 	 * Represents the type-name of widget-type <code>menuBar</code>
 	 */
-	public static final String WIDGET_TYPE_MENU_BAR = "menuBar";
+	public static final String WIDGET_TYPE_MENU_BAR = "menubar";
+	/**
+	 * Represents the type-name of widget-type <code>menu</code>
+	 */
+	public static final String WIDGET_TYPE_MENU_ITEM = "menuitem";
 	/**
 	 * Represents the type-name of widget-type <code>menu</code>
 	 */

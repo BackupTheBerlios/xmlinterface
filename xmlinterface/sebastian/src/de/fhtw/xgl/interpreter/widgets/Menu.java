@@ -4,8 +4,6 @@
  */
 package de.fhtw.xgl.interpreter.widgets;
 
-import de.fhtw.xgl.interpreter.Widget;
-
 /**
  * Represents the GUI-element Menu.
  * 
@@ -15,7 +13,7 @@ import de.fhtw.xgl.interpreter.Widget;
  * @author Sebastian Heide
  *
  */
-public interface Menu extends Widget
+public interface Menu extends MenuItem
 {
 
 	/**
@@ -23,22 +21,22 @@ public interface Menu extends Widget
 	 * 
 	 * @param mnu
 	 */
-	public void addMenu(Menu mnu);
+	public void addMenu(MenuItem mnu);
 	
 	/**
-	 * Returns the <code>Menu</code>-object with the index.
+	 * Returns the <code>MenuItem</code>-object with the index.
 	 * 
 	 * @param index of the Menu
 	 * @return Menu-object at index
 	 */
-	public Menu getMenuAtIndex(int index);
+	public MenuItem getMenuAtIndex(int index);
 	
 	/**
-	 * Removes the <code>Menu</code> from the MenuBar.
+	 * Removes the <code>MenuItem</code> from the MenuBar.
 	 * 
 	 * @param mnu Menu to remove
 	 */
-	public void removeMenu(Menu mnu);
+	public void removeMenu(MenuItem mnu);
 	
 	/**
 	 * Returns the number of menus added to this MenuBar-object.

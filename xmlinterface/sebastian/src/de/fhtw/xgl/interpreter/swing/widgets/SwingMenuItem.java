@@ -1,10 +1,10 @@
 /*
- * Created on 07.06.2004
+ * Created on 20.06.2004
  *
  */
 package de.fhtw.xgl.interpreter.swing.widgets;
 
-import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -12,38 +12,25 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 import de.fhtw.xgl.interpreter.Interpreter;
-import de.fhtw.xgl.interpreter.Widget;
-import de.fhtw.xgl.interpreter.widgets.Menu;
 import de.fhtw.xgl.interpreter.widgets.MenuItem;
 
-import javax.swing.JMenuItem;
-
 /**
- * @author Administrator
+ * @author Sebastian Heide
  *
  */
-public class SwingMenu extends JMenu implements Menu
+public class SwingMenuItem extends JMenuItem implements MenuItem
 {
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
 	private int callbackID = 0;
 	
-	public SwingMenu(String text)
-	{
-		this(null, null);
-	}
-	
-	public SwingMenu(Node node, Interpreter interpreter)
+	public SwingMenuItem(Node node, Interpreter interpreter)
 	{
 		super();
-		this.interpreter = interpreter;
+		System.out.println("SwingMenuItem");
+		setInterpreter(interpreter);
 		load(node);
-	}
-	
-	public SwingMenu(Node node)
-	{
-		this(node, null);
 	}
 
 	/* (non-Javadoc)
@@ -86,11 +73,13 @@ public class SwingMenu extends JMenu implements Menu
 			{
 				if (child.getNodeName().equals(Interpreter.XML_ELEMENT_WIDGETS))
 				{
-					loadWidgets(child);
 				}
 				else if (child.getNodeName().equals(Interpreter.XML_ELEMENT_PROPERTIES))
 				{
 					loadProperties(child);
+				}
+				else if (child.getNodeName().equals(Interpreter.XML_ELEMENT_EVENTS))
+				{
 				}
 			}
 		}
@@ -143,35 +132,6 @@ public class SwingMenu extends JMenu implements Menu
 		setBounds(xCoord, yCoord, width, height);
 	}
 
-	private void loadWidgets(Node node)
-	{
-		NodeList nodeList = node.getChildNodes();
-		Node child = null;
-		Node attr = null;
-		for (int i = 0; i < nodeList.getLength(); i ++)
-		{
-			child = nodeList.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE)
-			{
-				if (child.getAttributes() != null)
-					for (int j = 0; j < child.getAttributes().getLength(); j++)
-					{
-						attr = child.getAttributes().item(j);
-						if (attr.getNodeType() == Node.ATTRIBUTE_NODE)
-						{
-							if (attr.getNodeName().equals("type"))
-							{
-								if (attr.getNodeValue().equals(Interpreter.WIDGET_TYPE_MENU))
-									addMenu(new SwingMenu(child, interpreter));
-								else if (attr.getNodeValue().equals(Interpreter.WIDGET_TYPE_MENU_ITEM))
-									addMenu(new SwingMenuItem(child, interpreter));
-							} // if attr = "name"
-						} // if attr = ATTRIBUTE_NODE
-					} // Attributes iteration
-			} // if Node = ELEMENT_NODE
-		} // NodeList iteration
-	}
-
 	/* (non-Javadoc)
 	 * @see de.fhtw.xgl.interpreter.Widget#store(org.w3c.dom.Document)
 	 */
@@ -188,17 +148,6 @@ public class SwingMenu extends JMenu implements Menu
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
 
 		el.appendChild(storeProperties(doc));
-
-		Element elWidgets = doc.createElement(Interpreter.XML_ELEMENT_WIDGETS);
-		for (int i = 0; i < getComponentCount(); i++)
-		{
-			if (getComponent(i).getClass().getName().startsWith("de.fhtw.xgl.interpreter.swing"))
-			{
-				Widget w = (Widget)getComponent(i);
-				elWidgets.appendChild(w.store(doc));
-			}
-		}
-		el.appendChild(elWidgets);
 
 		return el;
 	}
@@ -250,7 +199,7 @@ public class SwingMenu extends JMenu implements Menu
 	 */
 	public String getType()
 	{
-		return Interpreter.WIDGET_TYPE_MENU;
+		return Interpreter.WIDGET_TYPE_MENU_ITEM;
 	}
 
 	/* (non-Javadoc)
@@ -259,38 +208,6 @@ public class SwingMenu extends JMenu implements Menu
 	public void setInterpreter(Interpreter i)
 	{
 		interpreter = i;
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#addMenu(de.fhtw.xgl.interpreter.widgets.Menu)
-	 */
-	public void addMenu(MenuItem mnu)
-	{
-		add((JMenuItem)mnu);	
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#getMenuAtIndex(int)
-	 */
-	public MenuItem getMenuAtIndex(int index)
-	{
-		return (MenuItem)getItem(index);
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#removeMenu(de.fhtw.xgl.interpreter.widgets.Menu)
-	 */
-	public void removeMenu(MenuItem mnu)
-	{
-		this.remove((JMenuItem)mnu);
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#getMenuCount()
-	 */
-	public int getMenuCount()
-	{
-		return getMenuComponentCount();
 	}
 
 	/* (non-Javadoc)
@@ -323,6 +240,7 @@ public class SwingMenu extends JMenu implements Menu
 	public void setMnemonic(String mnemonic)
 	{
 		char m = mnemonic.charAt(mnemonic.length() - 1);
+		System.out.println("setMnemonic: " + m);
 		setMnemonic((int)m);
 	}
 
@@ -333,6 +251,7 @@ public class SwingMenu extends JMenu implements Menu
 	{
 		String m = "Alt+";
 		m += (char)getMnemonic();
+		System.out.println("getMnemonic: " + m);
 		return m;
 	}
 

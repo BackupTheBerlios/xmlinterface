@@ -201,11 +201,14 @@ public class SwingWindow extends
 									getContentPane().add(new SwingContainer(child, interpreter));
 								else if (attr.getNodeValue().equals(Interpreter.WIDGET_TYPE_COMBOBOX))
 									getContentPane().add(new SwingCombobox(child, interpreter));
+								else if (attr.getNodeValue().equals(Interpreter.WIDGET_TYPE_MENU_BAR))
+									setJMenuBar(new SwingMenuBar(child, interpreter));
 							} // if attr = "name"
 						} // if attr = ATTRIBUTE_NODE
 					} // Attributes iteration
 			} // if Node = ELEMENT_NODE
 		} // NodeList iteration
+		System.out.println("Window.menuBar.size: " + getJMenuBar().getMenu(0).getMenuComponentCount());
 	}
 
 	/* (non-Javadoc)
@@ -236,6 +239,11 @@ public class SwingWindow extends
 				elWidgets.appendChild(w.store(doc));
 			}
 		}
+		if (getJMenuBar() != null) 
+		{
+			SwingMenuBar swm = (SwingMenuBar)getJMenuBar(); 
+			elWidgets.appendChild(swm.store(doc));
+		} 
 		el.appendChild(elWidgets);
 
 		return el;

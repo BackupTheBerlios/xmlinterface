@@ -1,10 +1,10 @@
 /*
- * Created on 07.06.2004
+ * Created on 19.06.2004
  *
  */
 package de.fhtw.xgl.interpreter.swing.widgets;
 
-import javax.swing.JMenu;
+import javax.swing.JCheckBox;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -12,38 +12,40 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 import de.fhtw.xgl.interpreter.Interpreter;
-import de.fhtw.xgl.interpreter.Widget;
-import de.fhtw.xgl.interpreter.widgets.Menu;
-import de.fhtw.xgl.interpreter.widgets.MenuItem;
-
-import javax.swing.JMenuItem;
+import de.fhtw.xgl.interpreter.widgets.Checkbox;
 
 /**
  * @author Administrator
  *
  */
-public class SwingMenu extends JMenu implements Menu
+public class SwingCheckbox extends JCheckBox implements Checkbox
 {
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
 	private int callbackID = 0;
 	
-	public SwingMenu(String text)
-	{
-		this(null, null);
-	}
-	
-	public SwingMenu(Node node, Interpreter interpreter)
+	public SwingCheckbox(Node node, Interpreter interpreter)
 	{
 		super();
-		this.interpreter = interpreter;
+		setInterpreter(interpreter);
 		load(node);
 	}
-	
-	public SwingMenu(Node node)
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.widgets.Checkbox#setChecked(boolean)
+	 */
+	public void setChecked(boolean value)
 	{
-		this(node, null);
+		setSelected(value);
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.widgets.Checkbox#isChecked()
+	 */
+	public boolean isChecked()
+	{
+		return isSelected();
 	}
 
 	/* (non-Javadoc)
@@ -86,7 +88,6 @@ public class SwingMenu extends JMenu implements Menu
 			{
 				if (child.getNodeName().equals(Interpreter.XML_ELEMENT_WIDGETS))
 				{
-					loadWidgets(child);
 				}
 				else if (child.getNodeName().equals(Interpreter.XML_ELEMENT_PROPERTIES))
 				{
@@ -131,45 +132,16 @@ public class SwingMenu extends JMenu implements Menu
 									xCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
 								if (attr.getNodeValue().equals(ATTRIBUTE_Y_COORD))
 									yCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
+								if (attr.getNodeValue().equals(ATTRIBUTE_CHECKED))
+									setChecked(Boolean.getBoolean(child.getFirstChild().getNodeValue()));
 								if (attr.getNodeValue().equals(ATTRIBUTE_TEXT))
 									setText(child.getFirstChild().getNodeValue());
-								if (attr.getNodeValue().equals(ATTRIBUTE_MNEMONIC))
-									setMnemonic(child.getFirstChild().getNodeValue());
 							} // if attr = "name"
 						} // if attr = ATTRIBUTE_NODE
 					} // Attributes iteration
 			} // if Node = ELEMENT_NODE
 		} // NodeList iteration
 		setBounds(xCoord, yCoord, width, height);
-	}
-
-	private void loadWidgets(Node node)
-	{
-		NodeList nodeList = node.getChildNodes();
-		Node child = null;
-		Node attr = null;
-		for (int i = 0; i < nodeList.getLength(); i ++)
-		{
-			child = nodeList.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE)
-			{
-				if (child.getAttributes() != null)
-					for (int j = 0; j < child.getAttributes().getLength(); j++)
-					{
-						attr = child.getAttributes().item(j);
-						if (attr.getNodeType() == Node.ATTRIBUTE_NODE)
-						{
-							if (attr.getNodeName().equals("type"))
-							{
-								if (attr.getNodeValue().equals(Interpreter.WIDGET_TYPE_MENU))
-									addMenu(new SwingMenu(child, interpreter));
-								else if (attr.getNodeValue().equals(Interpreter.WIDGET_TYPE_MENU_ITEM))
-									addMenu(new SwingMenuItem(child, interpreter));
-							} // if attr = "name"
-						} // if attr = ATTRIBUTE_NODE
-					} // Attributes iteration
-			} // if Node = ELEMENT_NODE
-		} // NodeList iteration
 	}
 
 	/* (non-Javadoc)
@@ -188,17 +160,6 @@ public class SwingMenu extends JMenu implements Menu
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
 
 		el.appendChild(storeProperties(doc));
-
-		Element elWidgets = doc.createElement(Interpreter.XML_ELEMENT_WIDGETS);
-		for (int i = 0; i < getComponentCount(); i++)
-		{
-			if (getComponent(i).getClass().getName().startsWith("de.fhtw.xgl.interpreter.swing"))
-			{
-				Widget w = (Widget)getComponent(i);
-				elWidgets.appendChild(w.store(doc));
-			}
-		}
-		el.appendChild(elWidgets);
 
 		return el;
 	}
@@ -233,13 +194,13 @@ public class SwingMenu extends JMenu implements Menu
 		el.appendChild(elProperty);
 
 		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_TEXT);
-		elProperty.appendChild(doc.createTextNode(getText()));
+		elProperty.setAttribute("name", ATTRIBUTE_CHECKED);
+		elProperty.appendChild(doc.createTextNode(new Boolean(isChecked()).toString()));
 		el.appendChild(elProperty);
 
 		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_MNEMONIC);
-		elProperty.appendChild(doc.createTextNode(getMnemonicString()));
+		elProperty.setAttribute("name", ATTRIBUTE_TEXT);
+		elProperty.appendChild(doc.createTextNode(getText()));
 		el.appendChild(elProperty);
 		
 		return el;
@@ -250,7 +211,7 @@ public class SwingMenu extends JMenu implements Menu
 	 */
 	public String getType()
 	{
-		return Interpreter.WIDGET_TYPE_MENU;
+		return Interpreter.WIDGET_TYPE_CHECKBOX;
 	}
 
 	/* (non-Javadoc)
@@ -259,38 +220,6 @@ public class SwingMenu extends JMenu implements Menu
 	public void setInterpreter(Interpreter i)
 	{
 		interpreter = i;
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#addMenu(de.fhtw.xgl.interpreter.widgets.Menu)
-	 */
-	public void addMenu(MenuItem mnu)
-	{
-		add((JMenuItem)mnu);	
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#getMenuAtIndex(int)
-	 */
-	public MenuItem getMenuAtIndex(int index)
-	{
-		return (MenuItem)getItem(index);
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#removeMenu(de.fhtw.xgl.interpreter.widgets.Menu)
-	 */
-	public void removeMenu(MenuItem mnu)
-	{
-		this.remove((JMenuItem)mnu);
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.Menu#getMenuCount()
-	 */
-	public int getMenuCount()
-	{
-		return getMenuComponentCount();
 	}
 
 	/* (non-Javadoc)
@@ -315,25 +244,6 @@ public class SwingMenu extends JMenu implements Menu
 	public int getCallbackID()
 	{
 		return callbackID;
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.MenuItem#setMnemonic(java.lang.String)
-	 */
-	public void setMnemonic(String mnemonic)
-	{
-		char m = mnemonic.charAt(mnemonic.length() - 1);
-		setMnemonic((int)m);
-	}
-
-	/* (non-Javadoc)
-	 * @see de.fhtw.xgl.interpreter.widgets.MenuItem#getMnemonicString()
-	 */
-	public String getMnemonicString()
-	{
-		String m = "Alt+";
-		m += (char)getMnemonic();
-		return m;
 	}
 
 }
