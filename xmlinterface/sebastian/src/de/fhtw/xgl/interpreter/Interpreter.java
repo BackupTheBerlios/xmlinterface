@@ -38,6 +38,13 @@ public interface Interpreter
 	 */	
 	public static final String XML_ROOT_ELEMENT = "xmlgui";
 	/**
+	 * Defines the <code>magic</code> attribute of the GUI.
+	 * The possible value is of type <code>boolean</code><br>
+	 * <code>true</code> means the GUI is editable<br>
+	 * <code>false</code> means the GUI is not editable
+	 */	
+	public static final String XML_ATTRIBUTE_MAGIC = "magic";
+	/**
 	 * Represents the <code>widget</code>-tag of the xml-file.
 	 */
 	public static final String XML_ELEMENT_WIDGET = "widget";
@@ -101,9 +108,14 @@ public interface Interpreter
 	 * Represents the type-name of widget-type <code>combobox</code>
 	 */
 	public static final String WIDGET_TYPE_COMBOBOX = "combobox";
+	/**
+	 * Represents the type-name of widget-type <code>comboboxElement</code>
+	 */
+	public static final String WIDGET_TYPE_COMBOBOX_ELEMENT = "comboboxElement";
 
 	/**
 	 * This method is called by <code>Widget<code>-objects to send an event to the <code>CallbackHandler</code>.
+	 * It should not be invoked directly.
 	 * 
 	 * @param widget
 	 */

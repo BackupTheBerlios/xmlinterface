@@ -37,7 +37,6 @@ public interface Widget
 	 * XML-attribute <code>id</code> of this object.
 	 */
 	public static final String XML_ATTRIBUTE_ID = "id";
-
 	/**
 	 * <code>width</code>-attribute of a widget
 	 */
@@ -53,7 +52,11 @@ public interface Widget
 	/**
 	 * <code>yCoord</code>-attribute of a widget
 	 */
-	public final static String ATTRIBUTE_Y_COORD = "yCoord"; 
+	public final static String ATTRIBUTE_Y_COORD = "yCoord";
+	/**
+	 * <code>Widget</code>-objects without a defined callback-ID return this constant value as callback-ID
+	 */ 
+	public final static int CALLBACK_ID_UNDEFINED = -1;
 	
 	/**
 	 * Constructs the widget from the Node-object.

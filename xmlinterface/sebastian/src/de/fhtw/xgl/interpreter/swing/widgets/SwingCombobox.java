@@ -6,6 +6,10 @@ package de.fhtw.xgl.interpreter.swing.widgets;
 
 import javax.swing.JComboBox;
 
+import java.awt.event.ActionEvent;
+
+import java.util.Vector;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -13,23 +17,29 @@ import org.w3c.dom.Element;
 
 import de.fhtw.xgl.interpreter.Interpreter;
 import de.fhtw.xgl.interpreter.widgets.Combobox;
+import de.fhtw.xgl.interpreter.widgets.ComboboxElement;
 
 /**
  * @author Sebastian Heide
  *
  */
-public class SwingCombobox extends JComboBox implements Combobox
+public class SwingCombobox 
+	extends 
+		JComboBox 
+	implements 
+		Combobox
 {
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
-	private int callbackID = 0;
+	private int callbackID = CALLBACK_ID_UNDEFINED;
 	
 	public SwingCombobox(Node node, Interpreter interpreter)
 	{
 		super();
 		setInterpreter(interpreter);
 		load(node);
+		this.addActionListener(this);
 	}
 
 	/* (non-Javadoc)
@@ -104,6 +114,7 @@ public class SwingCombobox extends JComboBox implements Combobox
 			{
 				if (child.getNodeName().equals(Interpreter.XML_ELEMENT_WIDGETS))
 				{
+					loadWidgets(child);
 				}
 				else if (child.getNodeName().equals(Interpreter.XML_ELEMENT_PROPERTIES))
 				{
@@ -145,20 +156,49 @@ public class SwingCombobox extends JComboBox implements Combobox
 							{
 								if (attr.getNodeValue().equals(ATTRIBUTE_WIDTH))
 									width = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_HEIGHT))
+								else if (attr.getNodeValue().equals(ATTRIBUTE_HEIGHT))
 									height = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_X_COORD))
+								else if (attr.getNodeValue().equals(ATTRIBUTE_X_COORD))
 									xCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_Y_COORD))
+								else if (attr.getNodeValue().equals(ATTRIBUTE_Y_COORD))
 									yCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_OPTION))
-									addOption(child.getFirstChild().getNodeValue());
 							} // if attr = "name"
 						} // if attr = ATTRIBUTE_NODE
 					} // Attributes iteration
 			} // if Node = ELEMENT_NODE
 		} // NodeList iteration
 		setBounds(xCoord, yCoord, width, height);
+	}
+	
+	private void loadWidgets(Node node)
+	{
+		Vector elements = new Vector();
+		NodeList nodeList = node.getChildNodes();
+		Node child = null;
+		Node attr = null;
+		for (int i = 0; i < nodeList.getLength(); i ++)
+		{
+			child = nodeList.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE)
+			{
+				if (child.getAttributes() != null)
+					for (int j = 0; j < child.getAttributes().getLength(); j++)
+					{
+						attr = child.getAttributes().item(j);
+						if (attr.getNodeType() == Node.ATTRIBUTE_NODE)
+						{
+							if (attr.getNodeName().equals("type"))
+							{
+								if (attr.getNodeValue().equals(Interpreter.WIDGET_TYPE_COMBOBOX_ELEMENT))
+								{
+									ComboboxElement cbe = new ComboboxElement(child, interpreter);
+									addOption(cbe.getText());
+								}
+							} // if attr = "name"
+						} // if attr = ATTRIBUTE_NODE
+					} // Attributes iteration
+			} // if Node = ELEMENT_NODE
+		} // NodeList iteration
 	}
 
 	/* (non-Javadoc)
@@ -171,12 +211,20 @@ public class SwingCombobox extends JComboBox implements Combobox
 		// set the widget's attributes
 		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getId()).toString());
+		if (callbackID != CALLBACK_ID_UNDEFINED) el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
 
 		el.appendChild(storeProperties(doc));
+
+		Element elWidgets = doc.createElement(Interpreter.XML_ELEMENT_WIDGETS);
+		for (int i = 0; i < getOptionCount(); i++)
+		{
+			ComboboxElement cbe = new ComboboxElement(getOptionAt(i), interpreter);
+			elWidgets.appendChild(cbe.store(doc));
+		}
+		el.appendChild(elWidgets);
 
 		return el;
 	}
@@ -209,14 +257,6 @@ public class SwingCombobox extends JComboBox implements Combobox
 		elProperty.setAttribute("name", ATTRIBUTE_HEIGHT);
 		elProperty.appendChild(doc.createTextNode(new Integer(getHeight()).toString()));
 		el.appendChild(elProperty);
-
-		for (int i = 0; i < getOptionCount(); i++)
-		{
-			elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-			elProperty.setAttribute("name", ATTRIBUTE_OPTION);
-			elProperty.appendChild(doc.createTextNode(getOptionAt(i)));
-			el.appendChild(elProperty);
-		}
 		
 		return el;
 	}
@@ -259,6 +299,11 @@ public class SwingCombobox extends JComboBox implements Combobox
 	public int getCallbackID()
 	{
 		return callbackID;
+	}
+	
+	public void actionPerformed(ActionEvent e)
+	{
+		if (callbackID != CALLBACK_ID_UNDEFINED && interpreter != null) interpreter.handleEvent(this);
 	}
 
 }

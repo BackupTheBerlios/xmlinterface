@@ -17,6 +17,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 // Project-imports
 import de.fhtw.xgl.interpreter.Widget;
 import de.fhtw.xgl.interpreter.Interpreter;
@@ -24,19 +26,20 @@ import de.fhtw.xgl.interpreter.widgets.Window;
 import de.fhtw.xgl.interpreter.swing.SwingInterpreter;
 
 /**
- * @author Administrator
+ * @author Sebastian Heide
  *
  */
 public class SwingWindow extends 
 						JFrame 
 					implements 
 						Window, 
-						WindowListener
+						WindowListener,
+						KeyListener
 {
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
-	private int callbackID = 0;
+	private int callbackID = CALLBACK_ID_UNDEFINED;
 
 	public SwingWindow()
 	{
@@ -66,10 +69,9 @@ public class SwingWindow extends
 	{
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
-		WindowListener[] l = this.getWindowListeners();
-		for (int i = 0; i < l.length; i++)
-			removeWindowListener(l[i]);
 		this.addWindowListener(this);
+		this.addKeyListener(this);
+
 	}
 	
 	/* (non-Javadoc)
@@ -208,7 +210,6 @@ public class SwingWindow extends
 					} // Attributes iteration
 			} // if Node = ELEMENT_NODE
 		} // NodeList iteration
-		System.out.println("Window.menuBar.size: " + getJMenuBar().getMenu(0).getMenuComponentCount());
 	}
 
 	/* (non-Javadoc)
@@ -221,7 +222,7 @@ public class SwingWindow extends
 		// set the widget's attributes
 		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getId()).toString());
+		if (callbackID != CALLBACK_ID_UNDEFINED) el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
@@ -231,6 +232,11 @@ public class SwingWindow extends
 		Element elWidgets = doc.createElement(Interpreter.XML_ELEMENT_WIDGETS);
 		Container cp = getContentPane();
 		SwingButton b = new SwingButton();
+		if (getJMenuBar() != null) 
+		{
+			SwingMenuBar swm = (SwingMenuBar)getJMenuBar(); 
+			elWidgets.appendChild(swm.store(doc));
+		} 
 		for (int i = 0; i < cp.getComponentCount(); i++)
 		{
 			if (cp.getComponent(i).getClass().getName().startsWith("de.fhtw.xgl.interpreter.swing"))
@@ -239,11 +245,6 @@ public class SwingWindow extends
 				elWidgets.appendChild(w.store(doc));
 			}
 		}
-		if (getJMenuBar() != null) 
-		{
-			SwingMenuBar swm = (SwingMenuBar)getJMenuBar(); 
-			elWidgets.appendChild(swm.store(doc));
-		} 
 		el.appendChild(elWidgets);
 
 		return el;
@@ -407,6 +408,30 @@ public class SwingWindow extends
 	public int getCallbackID()
 	{
 		return callbackID;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
+	public void keyTyped(KeyEvent e)
+	{
+		System.out.println("key");
+		if (e.isShiftDown() && e.isControlDown() && e.getKeyChar() == 'F')
+			System.out.println("magic");
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
+	public void keyPressed(KeyEvent e)
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
+	public void keyReleased(KeyEvent e)
+	{
 	}
 
 }

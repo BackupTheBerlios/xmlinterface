@@ -34,7 +34,7 @@ public class SwingContainer extends
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
-	private int callbackID = 0;
+	private int callbackID = CALLBACK_ID_UNDEFINED;
 	
 	public SwingContainer()
 	{
@@ -197,7 +197,7 @@ public class SwingContainer extends
 		// set the widget's attributes
 		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
+		if (callbackID != CALLBACK_ID_UNDEFINED) el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");

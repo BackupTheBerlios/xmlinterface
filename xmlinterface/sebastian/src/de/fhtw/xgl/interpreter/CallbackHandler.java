@@ -17,7 +17,7 @@ public interface CallbackHandler
 {
 	
 	/**
-	 * Handels the callback triggered by the specified <code>Widget</code>.
+	 * Handles the callback triggered by the specified <code>Widget</code>.
 	 * 
 	 * @param widget the callback's source
 	 */

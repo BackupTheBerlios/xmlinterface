@@ -33,7 +33,7 @@ public class SwingButton extends
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
-	private int callbackID = 0;
+	private int callbackID = CALLBACK_ID_UNDEFINED;
 	
 	public SwingButton()
 	{
@@ -166,7 +166,7 @@ public class SwingButton extends
 		// set the widget's attributes
 		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getId()).toString());
+		if (callbackID != CALLBACK_ID_UNDEFINED) el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
@@ -254,7 +254,7 @@ public class SwingButton extends
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		interpreter.handleEvent(this);
+		if (callbackID != CALLBACK_ID_UNDEFINED && interpreter != null) interpreter.handleEvent(this);
 	}
 
 	/* (non-Javadoc)

@@ -1,13 +1,8 @@
 /*
- * Created on 19.06.2004
+ * Created on 24.05.2004
  *
  */
-package de.fhtw.xgl.interpreter.swing.widgets;
-
-import javax.swing.JLabel;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+package de.fhtw.xgl.interpreter.widgets;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -15,35 +10,55 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 import de.fhtw.xgl.interpreter.Interpreter;
-import de.fhtw.xgl.interpreter.widgets.Label;
+import de.fhtw.xgl.interpreter.Widget;
 
 /**
- * @author Administrator
+ * Represents the GUI-element ComboboxElement.
+ * 
+ * Implementations of this interface could be written in Swing, AWT, SWT or whatever.
+ * The standard-implementation contains a Swing-implementation for this control.
+ * 
+ * @author Sebastian Heide
  *
  */
-public class SwingLabel 
-	extends 
-		JLabel 
-	implements 
-		Label,
-		MouseListener
+public class ComboboxElement implements Widget
 {
+	/**
+	 * <code>text</code>-attribute of a comboboxelement-widget
+	 */
+	public final static String ATTRIBUTE_TEXT = "text";
 	
+	private String text = null;
+
 	private Interpreter interpreter;
 	private int id = 0;
 	private int callbackID = CALLBACK_ID_UNDEFINED;
-
-	public SwingLabel(String text)
-	{
-		super(text);
-	}
 	
-	public SwingLabel(Node node, Interpreter interpreter)
+	public ComboboxElement(Node node, Interpreter interpreter)
 	{
-		super();
 		setInterpreter(interpreter);
 		load(node);
-		addMouseListener(this);
+	}
+	
+	public ComboboxElement(String text, Interpreter interpreter)
+	{
+		setInterpreter(interpreter);
+		setText(text);
+	}
+
+	/**
+	 * Sets the text-attribute of the <code>ComboboxElement</code>-object to the given String.
+	 * 
+	 * @param text String to set
+	 */
+	public void setText(String text)
+	{
+		this.text = text;
+	}
+	
+	public String getText()
+	{
+		return text;
 	}
 
 	/* (non-Javadoc)
@@ -77,7 +92,7 @@ public class SwingLabel
 				}
 			}
 		}
-		if (interpreter != null) interpreter.addWidget(id, this);
+//		if (interpreter != null) interpreter.addWidget(id, this);
 		// iterate through all attributes
 		for (int i = 0; i < nodeList.getLength(); i++)
 		{
@@ -105,10 +120,6 @@ public class SwingLabel
 	 */
 	private void loadProperties(Node node)
 	{
-		int width = 0;
-		int height = 0;
-		int xCoord = 0;
-		int yCoord = 0;
 		NodeList nodeList = node.getChildNodes();
 		Node child = null;
 		Node attr = null;
@@ -125,14 +136,6 @@ public class SwingLabel
 						{
 							if (attr.getNodeName().equals("name"))
 							{
-								if (attr.getNodeValue().equals(ATTRIBUTE_WIDTH))
-									width = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_HEIGHT))
-									height = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_X_COORD))
-									xCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_Y_COORD))
-									yCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
 								if (attr.getNodeValue().equals(ATTRIBUTE_TEXT))
 									setText(child.getFirstChild().getNodeValue());
 							} // if attr = "name"
@@ -140,7 +143,6 @@ public class SwingLabel
 					} // Attributes iteration
 			} // if Node = ELEMENT_NODE
 		} // NodeList iteration
-		setBounds(xCoord, yCoord, width, height);
 	}
 
 	/* (non-Javadoc)
@@ -173,26 +175,6 @@ public class SwingLabel
 		Element el = doc.createElement(Interpreter.XML_ELEMENT_PROPERTIES);
 
 		Element elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_X_COORD);
-		elProperty.appendChild(doc.createTextNode(new Integer(getX()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_Y_COORD);
-		elProperty.appendChild(doc.createTextNode(new Integer(getY()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_WIDTH);
-		elProperty.appendChild(doc.createTextNode(new Integer(getWidth()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_HEIGHT);
-		elProperty.appendChild(doc.createTextNode(new Integer(getHeight()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
 		elProperty.setAttribute("name", ATTRIBUTE_TEXT);
 		if (getText() != null)
 			elProperty.appendChild(doc.createTextNode(getText()));
@@ -208,7 +190,7 @@ public class SwingLabel
 	 */
 	public String getType()
 	{
-		return Interpreter.WIDGET_TYPE_LABEL;
+		return Interpreter.WIDGET_TYPE_COMBOBOX_ELEMENT;
 	}
 
 	/* (non-Javadoc)
@@ -217,6 +199,20 @@ public class SwingLabel
 	public void setInterpreter(Interpreter i)
 	{
 		interpreter = i;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Widget#setSize(int, int)
+	 */
+	public void setSize(int w, int h)
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Widget#setLocation(int, int)
+	 */
+	public void setLocation(int x, int y)
+	{
 	}
 
 	/* (non-Javadoc)
@@ -242,41 +238,5 @@ public class SwingLabel
 	{
 		return callbackID;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-	 */
-	public void mouseClicked(MouseEvent e)
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-	 */
-	public void mousePressed(MouseEvent e)
-	{
-		if (callbackID != CALLBACK_ID_UNDEFINED && interpreter != null) interpreter.handleEvent(this);
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-	 */
-	public void mouseReleased(MouseEvent e)
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-	 */
-	public void mouseEntered(MouseEvent e)
-	{
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-	 */
-	public void mouseExited(MouseEvent e)
-	{
-	}
-
+	
 }

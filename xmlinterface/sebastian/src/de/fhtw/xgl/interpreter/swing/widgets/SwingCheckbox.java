@@ -5,6 +5,8 @@
 package de.fhtw.xgl.interpreter.swing.widgets;
 
 import javax.swing.JCheckBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -15,21 +17,27 @@ import de.fhtw.xgl.interpreter.Interpreter;
 import de.fhtw.xgl.interpreter.widgets.Checkbox;
 
 /**
- * @author Administrator
+ * @author Sebastian Heide
  *
  */
-public class SwingCheckbox extends JCheckBox implements Checkbox
+public class SwingCheckbox 
+	extends 
+		JCheckBox 
+	implements 
+		Checkbox,
+		ActionListener
 {
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
-	private int callbackID = 0;
+	private int callbackID = CALLBACK_ID_UNDEFINED;
 	
 	public SwingCheckbox(Node node, Interpreter interpreter)
 	{
 		super();
 		setInterpreter(interpreter);
 		load(node);
+		addActionListener(this);
 	}
 
 	/* (non-Javadoc)
@@ -154,7 +162,7 @@ public class SwingCheckbox extends JCheckBox implements Checkbox
 		// set the widget's attributes
 		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getId()).toString());
+		if (callbackID != CALLBACK_ID_UNDEFINED) el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
@@ -244,6 +252,14 @@ public class SwingCheckbox extends JCheckBox implements Checkbox
 	public int getCallbackID()
 	{
 		return callbackID;
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+		if (callbackID != CALLBACK_ID_UNDEFINED && interpreter != null) interpreter.handleEvent(this);
 	}
 
 }

@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 // AWT-imports
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyListener;
 // Project-imports
 import de.fhtw.xgl.interpreter.Interpreter;
 import de.fhtw.xgl.interpreter.widgets.Textfield;
@@ -24,7 +26,12 @@ import de.fhtw.xgl.interpreter.widgets.Textfield;
  * @author Administrator
  *
  */
-public class SwingTextfield extends JPanel implements Textfield
+public class SwingTextfield 
+	extends 
+		JPanel 
+	implements 
+		Textfield,
+		java.awt.event.FocusListener
 {
 	
 	private JTextArea txt = null;
@@ -32,7 +39,7 @@ public class SwingTextfield extends JPanel implements Textfield
 	
 	private Interpreter interpreter = null;
 	private int id = 0; 
-	private int callbackID = 0; 
+	private int callbackID = CALLBACK_ID_UNDEFINED; 
 	
 	public SwingTextfield()
 	{
@@ -61,6 +68,7 @@ public class SwingTextfield extends JPanel implements Textfield
 	private void init()
 	{
 		txt = new JTextArea();
+		txt.addFocusListener(this);
 		add(txt, BorderLayout.CENTER);
 	}
 
@@ -176,7 +184,7 @@ public class SwingTextfield extends JPanel implements Textfield
 		// set the widget's attributes
 		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getId()).toString());
+		if (callbackID != CALLBACK_ID_UNDEFINED) el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
@@ -310,6 +318,27 @@ public class SwingTextfield extends JPanel implements Textfield
 	public boolean isEditable()
 	{
 		return txt.isEditable();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
+	 */
+	public void focusGained(FocusEvent e)
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.FocusListener#focusLost(java.awt.event.FocusEvent)
+	 */
+	public void focusLost(FocusEvent e)
+	{
+		System.out.println("focusLost");
+//		if (callbackID != CALLBACK_ID_UNDEFINED && interpreter != null) interpreter.handleEvent(this);
+	}
+	
+	public void addKeyListener(KeyListener l)
+	{
+		txt.addKeyListener(l);
 	}
 
 }

@@ -6,6 +6,9 @@ package de.fhtw.xgl.interpreter.swing.widgets;
 
 import javax.swing.JMenuItem;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -18,19 +21,19 @@ import de.fhtw.xgl.interpreter.widgets.MenuItem;
  * @author Sebastian Heide
  *
  */
-public class SwingMenuItem extends JMenuItem implements MenuItem
+public class SwingMenuItem extends JMenuItem implements MenuItem, ActionListener
 {
 	
 	private Interpreter interpreter = null;
 	private int id = 0;
-	private int callbackID = 0;
+	private int callbackID = CALLBACK_ID_UNDEFINED;
 	
 	public SwingMenuItem(Node node, Interpreter interpreter)
 	{
 		super();
-		System.out.println("SwingMenuItem");
 		setInterpreter(interpreter);
 		load(node);
+		addActionListener(this);
 	}
 
 	/* (non-Javadoc)
@@ -92,10 +95,6 @@ public class SwingMenuItem extends JMenuItem implements MenuItem
 	 */
 	private void loadProperties(Node node)
 	{
-		int width = 0;
-		int height = 0;
-		int xCoord = 0;
-		int yCoord = 0;
 		NodeList nodeList = node.getChildNodes();
 		Node child = null;
 		Node attr = null;
@@ -112,24 +111,15 @@ public class SwingMenuItem extends JMenuItem implements MenuItem
 						{
 							if (attr.getNodeName().equals("name"))
 							{
-								if (attr.getNodeValue().equals(ATTRIBUTE_WIDTH))
-									width = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_HEIGHT))
-									height = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_X_COORD))
-									xCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
-								if (attr.getNodeValue().equals(ATTRIBUTE_Y_COORD))
-									yCoord = new Integer(child.getFirstChild().getNodeValue()).intValue();
 								if (attr.getNodeValue().equals(ATTRIBUTE_TEXT))
 									setText(child.getFirstChild().getNodeValue());
-								if (attr.getNodeValue().equals(ATTRIBUTE_MNEMONIC))
+								else if (attr.getNodeValue().equals(ATTRIBUTE_MNEMONIC))
 									setMnemonic(child.getFirstChild().getNodeValue());
 							} // if attr = "name"
 						} // if attr = ATTRIBUTE_NODE
 					} // Attributes iteration
 			} // if Node = ELEMENT_NODE
 		} // NodeList iteration
-		setBounds(xCoord, yCoord, width, height);
 	}
 
 	/* (non-Javadoc)
@@ -142,7 +132,7 @@ public class SwingMenuItem extends JMenuItem implements MenuItem
 		// set the widget's attributes
 		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getId()).toString());
+		if (callbackID != CALLBACK_ID_UNDEFINED) el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getCallbackID()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
@@ -162,34 +152,17 @@ public class SwingMenuItem extends JMenuItem implements MenuItem
 		Element el = doc.createElement(Interpreter.XML_ELEMENT_PROPERTIES);
 
 		Element elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_X_COORD);
-		elProperty.appendChild(doc.createTextNode(new Integer(getX()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_Y_COORD);
-		elProperty.appendChild(doc.createTextNode(new Integer(getY()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_WIDTH);
-		elProperty.appendChild(doc.createTextNode(new Integer(getWidth()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_HEIGHT);
-		elProperty.appendChild(doc.createTextNode(new Integer(getHeight()).toString()));
-		el.appendChild(elProperty);
-
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
 		elProperty.setAttribute("name", ATTRIBUTE_TEXT);
 		elProperty.appendChild(doc.createTextNode(getText()));
 		el.appendChild(elProperty);
 
-		elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
-		elProperty.setAttribute("name", ATTRIBUTE_MNEMONIC);
-		elProperty.appendChild(doc.createTextNode(getMnemonicString()));
-		el.appendChild(elProperty);
+		if (getMnemonicString() != null)
+		{
+			elProperty = doc.createElement(Interpreter.XML_ELEMENT_PROPERTY);
+			elProperty.setAttribute("name", ATTRIBUTE_MNEMONIC);
+			elProperty.appendChild(doc.createTextNode(getMnemonicString()));
+			el.appendChild(elProperty);
+		}
 		
 		return el;
 	}
@@ -240,7 +213,6 @@ public class SwingMenuItem extends JMenuItem implements MenuItem
 	public void setMnemonic(String mnemonic)
 	{
 		char m = mnemonic.charAt(mnemonic.length() - 1);
-		System.out.println("setMnemonic: " + m);
 		setMnemonic((int)m);
 	}
 
@@ -249,10 +221,20 @@ public class SwingMenuItem extends JMenuItem implements MenuItem
 	 */
 	public String getMnemonicString()
 	{
+		// null, wenn kein Mnemonic gesetzt!
+		if (getMnemonic() == 0)
+			return null;
 		String m = "Alt+";
 		m += (char)getMnemonic();
-		System.out.println("getMnemonic: " + m);
 		return m;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+		if (interpreter != null) interpreter.handleEvent(this);
 	}
 
 }
