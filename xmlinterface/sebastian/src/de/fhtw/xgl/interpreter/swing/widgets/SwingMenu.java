@@ -20,8 +20,25 @@ public class SwingMenu extends JMenu implements Menu
 {
 	
 	private Interpreter interpreter = null;
-	
 	private int id = 0;
+	private int callbackID = 0;
+	
+	public SwingMenu(String text)
+	{
+		this(null, null);
+	}
+	
+	public SwingMenu(Node node, Interpreter interpreter)
+	{
+		super();
+		this.interpreter = interpreter;
+		load(node);
+	}
+	
+	public SwingMenu(Node node)
+	{
+		this(node, null);
+	}
 
 	/* (non-Javadoc)
 	 * @see de.fhtw.xgl.interpreter.Widget#load(org.w3c.dom.Node)
@@ -97,6 +114,24 @@ public class SwingMenu extends JMenu implements Menu
 	public int getId()
 	{
 		return id;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Widget#setCallbackID(int)
+	 */
+	public void setCallbackID(int id)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Widget#getCallbackID()
+	 */
+	public int getCallbackID()
+	{
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -38,7 +38,7 @@ public class SwingInterpreter implements de.fhtw.xgl.interpreter.Interpreter
 	}
 
 	/**
-	 * Constructs a <code>SwingInterpreter<code> without the given CallbackHandler.  
+	 * Constructs a <code>SwingInterpreter</code> without the given CallbackHandler.  
 	 *
 	 */
 	public SwingInterpreter(CallbackHandler cbh)

@@ -80,4 +80,11 @@ public interface Textfield extends Widget
 	 */
 	public void setScrollable(int mode);
 
+	/**
+	 * Returns if textfield is editable or not.
+	 * 
+	 * @return boolean-value
+	 */
+	public boolean isEditable();
+
 }

@@ -32,8 +32,8 @@ public class SwingButton extends
 {
 	
 	private Interpreter interpreter = null;
-	
 	private int id = 0;
+	private int callbackID = 0;
 	
 	public SwingButton()
 	{
@@ -73,18 +73,18 @@ public class SwingButton extends
 			attr = node.getAttributes().item(i);
 			if (attr.getNodeType() == Node.ATTRIBUTE_NODE)
 			{
-				if (attr.getNodeName().equals(XML_ATTRIBUTE_NAME))
+				if (attr.getNodeName().equals(XML_ATTRIBUTE_ID))
 				{
-					this.setName(attr.getNodeValue());
+					id = Integer.parseInt(attr.getNodeValue());
 				}
 				else if (attr.getNodeName().equals(XML_ATTRIBUTE_TYPE))
 				{
 					// exit if wrong widget-type
 					if (!attr.getNodeValue().equals(getType())) return false;
 				}
-				else if (attr.getNodeName().equals(XML_ATTRIBUTE_ID))
+				else if (attr.getNodeName().equals(XML_ATTRIBUTE_CALLBACK_ID))
 				{
-					id = Integer.parseInt(attr.getNodeValue());
+					callbackID = Integer.parseInt(attr.getNodeValue());
 				}
 			}
 		}
@@ -164,11 +164,9 @@ public class SwingButton extends
 		Element el = doc.createElement(XML_NODE_NAME);
 
 		// set the widget's attributes
+		el.setAttribute(XML_ATTRIBUTE_ID, new Integer(getId()).toString());
 		el.setAttribute(XML_ATTRIBUTE_TYPE, getType());
-		
-		if (getName() != null)
-			el.setAttribute(XML_ATTRIBUTE_NAME, getName());
-		else el.setAttribute(XML_ATTRIBUTE_NAME, "");
+		el.setAttribute(XML_ATTRIBUTE_CALLBACK_ID, new Integer(getId()).toString());
 		
 		// not yet implemented
 		el.setAttribute(XML_ATTRIBUTE_UI_TYPE, "");
@@ -265,6 +263,22 @@ public class SwingButton extends
 	public int getId()
 	{
 		return id;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Widget#setCallbackID(int)
+	 */
+	public void setCallbackID(int id)
+	{
+		callbackID = id;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.Widget#getCallbackID()
+	 */
+	public int getCallbackID()
+	{
+		return callbackID;
 	}
 
 }

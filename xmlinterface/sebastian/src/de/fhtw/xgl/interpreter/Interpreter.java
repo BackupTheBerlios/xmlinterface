@@ -85,7 +85,19 @@ public interface Interpreter
 	 * Represents the type-name of widget-type <code>container</code>
 	 */
 	public static final String WIDGET_TYPE_CONTAINER = "container";
-	
+	/**
+	 * Represents the type-name of widget-type <code>label</code>
+	 */
+	public static final String WIDGET_TYPE_LABEL = "label";
+	/**
+	 * Represents the type-name of widget-type <code>checkbox</code>
+	 */
+	public static final String WIDGET_TYPE_CHECKBOX = "checkbox";
+	/**
+	 * Represents the type-name of widget-type <code>combobox</code>
+	 */
+	public static final String WIDGET_TYPE_COMBOBOX = "combobox";
+
 	/**
 	 * This method is called by <code>Widget<code>-objects to send an event to the <code>CallbackHandler</code>.
 	 * 

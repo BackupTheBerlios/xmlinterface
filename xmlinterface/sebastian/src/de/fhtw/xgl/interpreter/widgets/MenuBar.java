@@ -34,13 +34,6 @@ public interface MenuBar extends Widget
 	public Menu getMenuAtIndex(int index);
 	
 	/**
-	 * Removes the <code>Menu</code> from the MenuBar.
-	 * 
-	 * @param mnu Menu to remove
-	 */
-	public void removeMenu(Menu mnu);
-	
-	/**
 	 * Returns the number of menus added to this MenuBar-object.
 	 * 
 	 * @return number of menus

@@ -48,7 +48,7 @@ public interface Container extends Widget
 	/**
 	 * Returns the <code>Widget</code> with specified index.
 	 * 
-	 * @param index
+	 * @param index the widget's index
 	 * @return Widget-object at index
 	 */
 	public Widget getWidget(int index);

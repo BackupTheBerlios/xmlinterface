@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Document;
 
 /**
- * Basic GUI-element. All widget are derived from this interface.
+ * Basic GUI-element. All widgets are derived from this interface.
  * 
  * @author Sebastian Heide
  *
@@ -22,9 +22,9 @@ public interface Widget
 	 */
 	public static final String XML_NODE_NAME = "widget";
 	/**
-	 * XML-attribute <code>name</code> of this object.
+	 * XML-attribute <code>callbackID</code> of this object.
 	 */
-	public static final String XML_ATTRIBUTE_NAME = "name";
+	public static final String XML_ATTRIBUTE_CALLBACK_ID = "callbackID";
 	/**
 	 * XML-attribute <code>type</code> of this object.
 	 */
@@ -107,5 +107,19 @@ public interface Widget
 	 * @return id of the widget
 	 */
 	public int getId();
+	
+	/**
+	 * Sets the widget's CallbackID.
+	 * 
+	 * @param id callbackID to set
+	 */
+	public void setCallbackID(int id);
+
+	/**
+	 * Returns the widget's callbackIDd.
+	 * 
+	 * @return callbackID of the widget
+	 */
+	public int getCallbackID();
 
 }
