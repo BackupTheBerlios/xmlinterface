@@ -18,11 +18,17 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class TestLoadClass
 {
+	
+	public final static String inputFile =
+		"project" + java.io.File.separator +
+		"xml" + java.io.File.separator + 
+		"formular_test.xml";
+	
 	public static void main(String[] args)
 	{
 		try
 		{
-			FileInputStream reader = new FileInputStream("examples\\test.xml");
+			FileInputStream reader = new FileInputStream(inputFile);
 			
 			// create interpreter and add sample-callbackhandler
 			SwingInterpreter interpreter = new SwingInterpreter(new ExampleCallbackHandler());
