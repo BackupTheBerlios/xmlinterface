@@ -5,12 +5,13 @@
 package de.fhtw.xgl.example;
 
 // AWT-iimports
-import java.awt.Frame;
+//import java.awt.Frame;
 // Project-imports
-import de.fhtw.xgl.interpreter.Callback;
-import de.fhtw.xgl.interpreter.CallbackHandler;
 import de.fhtw.xgl.interpreter.swing.SwingInterpreter;
-import de.fhtw.xgl.interpreter.swing.Window;
+import de.fhtw.xgl.interpreter.swing.widgets.SwingWindow;
+import de.fhtw.xgl.interpreter.swing.widgets.SwingButton;
+import de.fhtw.xgl.interpreter.CallbackHandler;
+import de.fhtw.xgl.interpreter.Widget;
 
 /**
  * @author Administrator
@@ -22,37 +23,40 @@ public class ExampleCallbackHandler implements CallbackHandler
 	/* (non-Javadoc)
 	 * @see de.fhtw.xgl.interpreter.CallbackHandler#handleCallBack(de.fhtw.xgl.interpreter.Callback)
 	 */
-	public void handleCallback(Callback callback)
+	public void handleCallback(Widget w)
 	{
-		if (callback.getSource().getType().equals(SwingInterpreter.WIDGET_TYPE_WINDOW))
+		if (w.getType().equals(SwingInterpreter.WIDGET_TYPE_WINDOW))
 		{
-			handleWindowCallback(callback);
+			SwingWindow win = (SwingWindow)w;
+			handleWindowCallback(win);
 		}
-		else if (callback.getSource().getType().equals(SwingInterpreter.WIDGET_TYPE_BUTTON))
+		else if (w.getType().equals(SwingInterpreter.WIDGET_TYPE_BUTTON))
 		{
-			handleButtonCallback(callback);
+			SwingButton cbt = (SwingButton)w;
+			handleButtonCallback(cbt);
 		}
 	}
 	
-	private void handleWindowCallback(Callback callback)
+	private void handleWindowCallback(SwingWindow w)
 	{
-		Window w = (Window)callback.getSource();
-		if (callback.getType().equals(Callback.WINDOW_CALLBACK_CLOSE))
-		{
-			w.setVisible(false);
-			System.exit(0);
-		}
-		else if (callback.getType().equals(Callback.WINDOW_CALLBACK_MAXIMIZE))
-		{
-			w.setState(Frame.MAXIMIZED_BOTH);
-		}
-		else if (callback.getType().equals(Callback.WINDOW_CALLBACK_MINIMIZE))
-		{
-			w.setState(Frame.ICONIFIED);
-		}
+		System.exit(0);
+//		SwingWindow w = (SwingWindow)callback.getSource();
+//		if (callback.getType().equals(Callback.WINDOW_CALLBACK_CLOSE))
+//		{
+//			w.setVisible(false);
+//			System.exit(0);
+//		}
+//		else if (callback.getType().equals(Callback.WINDOW_CALLBACK_MAXIMIZE))
+//		{
+//			w.setState(Frame.MAXIMIZED_BOTH);
+//		}
+//		else if (callback.getType().equals(Callback.WINDOW_CALLBACK_MINIMIZE))
+//		{
+//			w.setState(Frame.ICONIFIED);
+//		}
 	}
 	
-	private void handleButtonCallback(Callback callback)
+	private void handleButtonCallback(SwingButton cbt)
 	{
 		System.exit(0);
 	}
