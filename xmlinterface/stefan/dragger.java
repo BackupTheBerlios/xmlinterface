@@ -1,7 +1,7 @@
 
 import java.awt.Point;
 /*
- * testapp.java
+ * dragger.java
  *
  * Created on 25. April 2004, 14:26
  */
@@ -13,16 +13,9 @@ import java.awt.Point;
 public class dragger extends javax.swing.JFrame {
 
 	private Point p;
-	private Point newP;
-	private double distanceP;
-	private boolean draggable = true; 
 	private int moveToX, moveToY;
-
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JTextField jTextField1;
-	    
-	/** Creates new form testapp */
+
     public dragger() {
         initComponents();
     }
@@ -34,15 +27,12 @@ public class dragger extends javax.swing.JFrame {
     private void initComponents() {
    	
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         Point p = new Point();
-        Point newP = new Point();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
-        jButton1.setText("jButton1");
+        jButton1.setText("drag me");
         jButton1.setBorder(new javax.swing.border.EtchedBorder());
 
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -62,9 +52,6 @@ public class dragger extends javax.swing.JFrame {
 
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 90, 30));
 
-        jTextField1.setText("jTextField1");
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 160, -1));
-  
         pack();
     }
 
