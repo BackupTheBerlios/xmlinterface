@@ -7,15 +7,16 @@
 // Possible Widget Types
 enum Types
 {
-    button,
-    window,
-    Menu,
-    menubar,
-    MenuItem,
-    textfield,
-    checkbox,
-    combobox,
-    comboboxElement
+  label,
+  button,
+  window,
+  Menu,
+  menubar,
+  MenuItem,
+  textfield,
+  checkbox,
+  combobox,
+  comboboxElement
 };
 
 class widget
@@ -23,7 +24,8 @@ class widget
 public:
   // Attributes
   int           _iId;
-  std::string   _sId;
+  int           _iCallbackId;
+  std::string   _sId;         // deprecated
   enum Types    _eWidgetType;
 	
   // Properties
@@ -50,6 +52,7 @@ public:
     // Empty Attributes
     _sId          = "";
     _iId          = NULL;
+    _iCallbackId  = NULL;
     // _eWidgetType  = NULL;
 
     // Empty Properties

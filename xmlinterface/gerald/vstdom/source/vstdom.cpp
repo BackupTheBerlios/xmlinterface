@@ -123,6 +123,11 @@ enum Types sTypeToEnum( const std::string& s)
   {
     type = button;
   }
+  if( !s.compare( "label" ))
+  {
+    type = label;
+  }
+
 
   return type;
 }
@@ -398,7 +403,10 @@ widget* vstdom::getWidget( int id)
       // Attribute zuordnen
       widgetElement->_sId     = XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "id")));
       widgetElement->_iId     = idWidget;
-      
+      if( domWidget->hasAttribute( XMLString::transcode( "callbackID"))) {
+        widgetElement->_iCallbackId = stringTo<int>(XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "callbackID"))));
+      }
+
       widgetElement->_eWidgetType = sTypeToEnum( XMLString::transcode( domWidget->getAttribute( XMLString::transcode( "type"))));
 
       DOMNodeList *propertiesList    = domWidget->getElementsByTagName( XMLString::transcode( "properties"));
@@ -491,13 +499,35 @@ widget* vstdom::getWidget( int id)
  */
 bool vstdom::addWidget( widget toBeAdd, int idOfParentWidget)
 {
+  DOMElement* newWidget           = doc->createElement( XMLString::transcode( "widget"));
+  DOMElement* newWidgetProperties = doc->createElement( XMLString::transcode( "properties"));
+  DOMElement* newWidgetChilds     = doc->createElement( XMLString::transcode( "widgets"));
+  
+  newWidget->setAttribute( XMLString::transcode( "id"), XMLString::transcode( (toString(toBeAdd._iId)).c_str()));
+  newWidget->setAttribute( XMLString::transcode( "type"), XMLString::transcode( (enumToString( toBeAdd._eWidgetType)).c_str()));
+  
+  DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  if( toBeAdd._iHeight != NULL) {
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "height"));
+  }
+
+  newWidgetProperties->appendChild( newProperty);
+
+  newWidget->appendChild( newWidgetProperties);
+  newWidget->appendChild( newWidgetChilds);
+
+  DOMNodeList *rootwidgetlist = doc->getElementsByTagName( XMLString::transcode( "widgets"));
+  if( rootwidgetlist->getLength() <= 0)         // No widget found
+  {
+    return false;
+  }
+  
+  DOMElement *rootWidget = (DOMElement *) rootwidgetlist->item(0);
+  
+  rootWidget->appendChild( newWidget);
   return false;
 }
 
-bool vstdom::addWidget( widget toBeAdd)
-{
-  return false;
-}
 
 /**
  * change the values of an existing Widget
@@ -523,7 +553,7 @@ bool vstdom::updateWidget( widget changedWidget, int idOfWidget)
       std::string tempstr = enumToString( changedWidget._eWidgetType);
       widget->setAttribute( XMLString::transcode( "type"),
                             XMLString::transcode( tempstr.c_str()));
-
+    
       // dann die Properties
       DOMNodeList *propertiesList    = widget->getElementsByTagName( XMLString::transcode( "properties"));
       DOMElement  *propertiesElement = ( DOMElement *) propertiesList->item(0);

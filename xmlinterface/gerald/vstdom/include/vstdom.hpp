@@ -70,8 +70,7 @@ public:
    * add a Widget to a widget in the VST-DOM Tree
    * if no name specified, it will be add as root widget
    */
-  bool addWidget( widget toBeAdd, int idOfParentWidget);
-  bool addWidget( widget toBeAdd);
+  bool addWidget( widget toBeAdd, int idOfParentWidget=-1);
 
   /**
    * change the values of an existing Widget

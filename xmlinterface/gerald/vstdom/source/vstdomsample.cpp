@@ -29,6 +29,7 @@ int main( int argC, char *argV[])
   // definiere neues Widget
   widget updatedWidget;
   updatedWidget._iId = 8;
+  updatedWidget._eWidgetType = button;
   updatedWidget._iWidth = 100;
   updatedWidget._iHeight = 50;
   updatedWidget._iXCoord = 10;
@@ -38,6 +39,13 @@ int main( int argC, char *argV[])
 
   // uebertrage geaendertes Widget
   testvstdom->updateWidget( updatedWidget, updatedWidget._iId);
+
+  widget newWidget;
+  newWidget._iId = 88;
+  newWidget._eWidgetType = window;
+  newWidget._iHeight = 43;
+
+  testvstdom->addWidget(newWidget);
 
   // schreibe neues xml File
   testvstdom->writexml( "neues_xml.xml");
@@ -71,11 +79,14 @@ void parseWidget(vstdom *dom, widget *wid)
   cout << endl << einrueckung.c_str() << " height   " << wid->_iHeight;
   cout << endl << einrueckung.c_str() << " xCoord   " << wid->_iXCoord;
   cout << endl << einrueckung.c_str() << " yCoord   " << wid->_iYCoord;
-  cout << endl << einrueckung.c_str() << " title    " << wid->_sTitle.c_str();
-  cout << endl << einrueckung.c_str() << " text     " << wid->_sText.c_str();
+  cout << endl << einrueckung.c_str() << " title    " << (wid->_sTitle).c_str();
+  cout << endl << einrueckung.c_str() << " text     " << (wid->_sText).c_str();
   cout << endl << einrueckung.c_str() << " editable " << wid->_bEditable;
   cout << endl << einrueckung.c_str() << " checked  " << wid->_bchecked;
+  cout << endl << einrueckung.c_str() << " Callback " << wid->_iCallbackId;
   cout << endl << einrueckung.c_str();
+
+  
 
   switch( wid->_eWidgetType)
   {
