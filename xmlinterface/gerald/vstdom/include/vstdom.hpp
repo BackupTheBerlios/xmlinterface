@@ -48,9 +48,9 @@ public:
 
   /**
    * returns the number of Childwidget from a parent widget
-   * if no name specified, it returns the number of root widgets
+   * if no id specified, it returns the number of root widgets
    */
-  long getNumberOfChildWidget( std::string name);
+  long getNumberOfChildWidget( int id);
   long getNumberOfChildWidget();
 
   /**
@@ -58,19 +58,25 @@ public:
    * check first the with getNumberOfChildWidget, how many root Widget
    * are there
    */
-  std::string getNameOfRootWidget( long NumberOfRootWidget);
+  int getNameOfRootWidget( long NumberOfRootWidget); // deprecated
+  int getIdOfRootWidget( long NumberOfRootWidget);
 
   /**
-   * returns a widget specified by the name
+   * returns a widget specified by the id
    */
-  widget* getWidget( std::string name);
+  widget* getWidget( int id);
 
   /**
    * add a Widget to a widget in the VST-DOM Tree
    * if no name specified, it will be add as root widget
    */
-  bool addWidget( widget toBeAdd, std::string nameOfParentWidget);
+  bool addWidget( widget toBeAdd, int idOfParentWidget);
   bool addWidget( widget toBeAdd);
+
+  /**
+   * change the values of an existing Widget
+   */
+  bool updateWidget( widget changedWidget, int idOfWidget);
   
 private :
   char                      *xmlfile; // die xml-Datei mit der GUI

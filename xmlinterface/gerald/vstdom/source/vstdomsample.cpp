@@ -16,13 +16,31 @@ int main( int argC, char *argV[])
   // Anzahl der root Elemente ermitteln
   cout << endl << "Anzahl der root Widget " << testvstdom->getNumberOfChildWidget() << endl;  
 
+  // Schleife ueber alle root Elemente
   for( int i = 0; i < testvstdom->getNumberOfChildWidget(); i++)
   {
-    widget *rootwidget = testvstdom->getWidget(testvstdom->getNameOfRootWidget(i));
+    // root Element einem widget zuordnen
+    widget *rootwidget = testvstdom->getWidget(testvstdom->getIdOfRootWidget(i));
   
-    // Ausgabe aller Elemente (rekursiv)
+    // Ausgabe der Attribute und Proberties aller Elemente (rekursiv)
     parseWidget(testvstdom, rootwidget);
   }
+
+  // definiere neues Widget
+  widget updatedWidget;
+  updatedWidget._iId = 8;
+  updatedWidget._iWidth = 100;
+  updatedWidget._iHeight = 50;
+  updatedWidget._iXCoord = 10;
+  updatedWidget._iYCoord = 10;
+  updatedWidget._sText   = "geänderter Text";
+  updatedWidget._bEditable = true;
+
+  // uebertrage geaendertes Widget
+  testvstdom->updateWidget( updatedWidget, updatedWidget._iId);
+
+  // schreibe neues xml File
+  testvstdom->writexml( "neues_xml.xml");
   
   delete testvstdom;
 
@@ -41,12 +59,13 @@ void parseWidget(vstdom *dom, widget *wid)
     einrueckung += "|";
     a++;
   }
+  einrueckung += " ";
   
-  // eineindeutige ID 
-  cout << endl << einrueckung.c_str() << " Widget ID " << wid->_sId.c_str();
+  // Ausgabe eineindeutige ID 
+  cout << endl << einrueckung.c_str() << " Widget ID " << wid->_iId;
   cout << endl << einrueckung.c_str();
 
-  // Properties
+  // Ausgabe der Properties
   cout << endl << einrueckung.c_str() << " Properties";
   cout << endl << einrueckung.c_str() << " width    " << wid->_iWidth;
   cout << endl << einrueckung.c_str() << " height   " << wid->_iHeight;
@@ -72,11 +91,11 @@ void parseWidget(vstdom *dom, widget *wid)
   }
   
   // Rekursiv über alle Childs
-  cout << endl << einrueckung.c_str() << " " << wid->_sId.c_str() << " hat " << wid->_vChildWidgets.size() << " Childwidgets.";
+  cout << endl << einrueckung.c_str() << " " << wid->_iId << " hat " << wid->_vChildWidgets.size() << " Childwidgets.";
   for( int i = 0; i < wid->_vChildWidgets.size(); i++)
   {
     cout << endl << einrueckung.c_str();
-    cout << endl << einrueckung.c_str() << " " << i << ". Childwidget von " << wid->_sId.c_str() << " ist " << wid->_vChildWidgets.at(i);
+    cout << endl << einrueckung.c_str() << i << ". Childwidget von " << wid->_iId << " ist " << wid->_vChildWidgets.at(i);
     widget *childwidget = dom->getWidget( wid->_vChildWidgets.at(i));
     if( childwidget != NULL)
     {
