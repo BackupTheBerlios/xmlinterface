@@ -1,6 +1,8 @@
 #ifndef VST_DOM_HPP
 #define VST_DOM_HPP
 
+#pragma warning( disable : 4786 )  // Disable warning messages
+
 #include <string>
 #include <iostream>
 

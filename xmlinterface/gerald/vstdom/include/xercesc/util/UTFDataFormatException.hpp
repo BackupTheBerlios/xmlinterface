@@ -55,7 +55,7 @@
  */
 
 /*
- * $Id: UTFDataFormatException.hpp,v 1.1 2004/05/26 18:35:17 geraschna Exp $
+ * $Id: UTFDataFormatException.hpp,v 1.2 2004/05/26 20:55:09 geraschna Exp $
  */
 
 #if !defined(UTFDATAFORMATEXCEPTION_HPP)

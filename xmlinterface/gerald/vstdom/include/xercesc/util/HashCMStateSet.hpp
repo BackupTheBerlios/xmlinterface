@@ -55,9 +55,9 @@
  */
 
 /*
- * $Id: HashCMStateSet.hpp,v 1.1 2004/05/26 18:35:17 geraschna Exp $
+ * $Id: HashCMStateSet.hpp,v 1.2 2004/05/26 20:55:09 geraschna Exp $
  * $Log: HashCMStateSet.hpp,v $
- * Revision 1.1  2004/05/26 18:35:17  geraschna
+ * Revision 1.2  2004/05/26 20:55:09  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.4  2004/01/29 11:48:46  cargilld

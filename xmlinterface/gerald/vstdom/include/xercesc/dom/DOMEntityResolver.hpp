@@ -59,7 +59,7 @@
 
 /*
  * $Log: DOMEntityResolver.hpp,v $
- * Revision 1.1  2004/05/26 18:35:16  geraschna
+ * Revision 1.2  2004/05/26 20:55:08  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.6  2003/03/07 19:59:04  tng

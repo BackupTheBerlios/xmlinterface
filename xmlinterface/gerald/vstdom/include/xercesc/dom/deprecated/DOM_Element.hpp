@@ -55,7 +55,7 @@
  */
 
 /*
- * $Id: DOM_Element.hpp,v 1.1 2004/05/26 18:35:16 geraschna Exp $
+ * $Id: DOM_Element.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
  */
 
 #ifndef DOM_Element_HEADER_GUARD_

@@ -56,7 +56,7 @@
 
 /*
  * $Log: DeclHandler.hpp,v $
- * Revision 1.1  2004/05/26 18:35:17  geraschna
+ * Revision 1.2  2004/05/26 20:55:09  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.3  2003/03/07 18:10:30  tng

@@ -56,7 +56,7 @@
 
 /*
  * $Log: XSObjectFactory.hpp,v $
- * Revision 1.1  2004/05/26 18:35:17  geraschna
+ * Revision 1.2  2004/05/26 20:55:08  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.8  2004/01/07 02:33:56  knoaman

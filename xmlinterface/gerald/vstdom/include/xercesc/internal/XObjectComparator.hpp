@@ -56,7 +56,7 @@
 
 /*
  * $Log: XObjectComparator.hpp,v $
- * Revision 1.1  2004/05/26 18:35:16  geraschna
+ * Revision 1.2  2004/05/26 20:55:08  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.2  2003/10/31 22:15:42  peiyongz
@@ -65,7 +65,7 @@
  * Revision 1.1  2003/10/29 16:14:15  peiyongz
  * XObjectComparator/XTemplateComparator
  *
- * $Id: XObjectComparator.hpp,v 1.1 2004/05/26 18:35:16 geraschna Exp $
+ * $Id: XObjectComparator.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
  *
  */
 

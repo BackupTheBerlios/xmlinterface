@@ -55,9 +55,9 @@
  */
 
 /*
- * $Id: XMLUri.hpp,v 1.1 2004/05/26 18:35:17 geraschna Exp $
+ * $Id: XMLUri.hpp,v 1.2 2004/05/26 20:55:09 geraschna Exp $
  * $Log: XMLUri.hpp,v $
- * Revision 1.1  2004/05/26 18:35:17  geraschna
+ * Revision 1.2  2004/05/26 20:55:09  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.16  2004/01/12 22:01:02  cargilld

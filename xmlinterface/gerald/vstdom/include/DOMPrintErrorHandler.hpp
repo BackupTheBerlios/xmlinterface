@@ -55,9 +55,9 @@
  */
 
 /*
- * $Id: DOMPrintErrorHandler.hpp,v 1.1 2004/05/26 18:35:16 geraschna Exp $
+ * $Id: DOMPrintErrorHandler.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
  * $Log: DOMPrintErrorHandler.hpp,v $
- * Revision 1.1  2004/05/26 18:35:16  geraschna
+ * Revision 1.2  2004/05/26 20:55:08  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.2  2002/11/05 21:46:19  tng

@@ -56,7 +56,7 @@
 
 /*
  * $Log: ValidationContext.hpp,v $
- * Revision 1.1  2004/05/26 18:35:16  geraschna
+ * Revision 1.2  2004/05/26 20:55:08  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.2  2003/11/24 05:10:26  neilg
@@ -65,7 +65,7 @@
  * Revision 1.1  2003/11/12 20:28:16  peiyongz
  * Stateless Grammar: ValidationContext
  *
- * $Id: ValidationContext.hpp,v 1.1 2004/05/26 18:35:16 geraschna Exp $
+ * $Id: ValidationContext.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
  *
  */
 

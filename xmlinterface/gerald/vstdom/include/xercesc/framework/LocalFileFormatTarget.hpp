@@ -55,9 +55,9 @@
  */
 
 /*
- * $Id: LocalFileFormatTarget.hpp,v 1.1 2004/05/26 18:35:16 geraschna Exp $
+ * $Id: LocalFileFormatTarget.hpp,v 1.2 2004/05/26 20:55:08 geraschna Exp $
  * $Log: LocalFileFormatTarget.hpp,v $
- * Revision 1.1  2004/05/26 18:35:16  geraschna
+ * Revision 1.2  2004/05/26 20:55:08  geraschna
  * vstdom Projekt, zum parsieren der xml files und senden an das GUI Toolkit
  *
  * Revision 1.6  2003/05/16 21:36:55  knoaman
