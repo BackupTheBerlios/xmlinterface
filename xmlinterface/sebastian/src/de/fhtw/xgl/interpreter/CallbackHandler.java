@@ -1,21 +1,26 @@
 /*
- * Created on 05.05.2004
+ * Created on 06.06.2004
  *
  */
 package de.fhtw.xgl.interpreter;
 
 /**
- * @author Administrator
+ * Defines the connection with the application logic.
+ * 
+ * A class connecting GUI and logic must implement this interface.<br>
+ * GUI-events are delivered through the method handleCallback(Widget widget).
+ * 
+ * @author Sebastian Heide
  *
  */
 public interface CallbackHandler
 {
 	
 	/**
-	 * Main method of CallBackHandler which handles all the events of this GUI.
+	 * Handels the callback triggered by the specified <code>Widget</code>.
 	 * 
-	 * @return
+	 * @param widget the callback's source
 	 */
-	void handleCallback(Callback callback);
-
+	public void handleCallback(Widget widget);
+	
 }
