@@ -74,6 +74,9 @@ std::string enumToString( enum Types eType)
   case comboboxElement:
     retValue = "comboboxElement";
     break;
+  case label:
+    retValue = "label";
+    break;
   default:
     retValue = "type not defined";
   }
@@ -460,7 +463,12 @@ widget* vstdom::getWidget( int id)
         }
         if( !propertyType.compare( "editable"))
         {
-          widgetElement->_bEditable = stringTo<bool>(XMLString::transcode( propertyChild->getData()));
+          if( strcmp(XMLString::transcode( propertyChild->getData()), "true")) {
+            widgetElement->_bEditable = true;
+          }
+          else {
+            widgetElement->_bEditable = false;
+          }
         }
         if( !propertyType.compare( "isScrollable"))
         {
@@ -499,33 +507,194 @@ widget* vstdom::getWidget( int id)
  */
 bool vstdom::addWidget( widget toBeAdd, int idOfParentWidget)
 {
+  // virtuelle DOMElemente
   DOMElement* newWidget           = doc->createElement( XMLString::transcode( "widget"));
   DOMElement* newWidgetProperties = doc->createElement( XMLString::transcode( "properties"));
   DOMElement* newWidgetChilds     = doc->createElement( XMLString::transcode( "widgets"));
   
+  // Attribute setzen
   newWidget->setAttribute( XMLString::transcode( "id"), XMLString::transcode( (toString(toBeAdd._iId)).c_str()));
   newWidget->setAttribute( XMLString::transcode( "type"), XMLString::transcode( (enumToString( toBeAdd._eWidgetType)).c_str()));
+  if( toBeAdd._iCallbackId != NULL) {
+    newWidget->setAttribute( XMLString::transcode( "callbackID"), XMLString::transcode( (toString(toBeAdd._iCallbackId)).c_str()));
+  }
   
-  DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._iWidth != NULL) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "width"));
+    DOMText* newDOMText = doc->createTextNode( XMLString::transcode( (toString( toBeAdd._iWidth)).c_str()));
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+  
+  // Property Element zusammensetzen und an die Gruppe haengen
   if( toBeAdd._iHeight != NULL) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
     newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "height"));
+    DOMText* newDOMText = doc->createTextNode( XMLString::transcode( (toString( toBeAdd._iHeight)).c_str()));
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
   }
 
-  newWidgetProperties->appendChild( newProperty);
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._iXCoord != NULL) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "xCoord"));
+    DOMText* newDOMText = doc->createTextNode( XMLString::transcode( (toString( toBeAdd._iXCoord)).c_str()));
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+  
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._iYCoord != NULL) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "yCoord"));
+    DOMText* newDOMText = doc->createTextNode( XMLString::transcode( (toString( toBeAdd._iYCoord)).c_str()));
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
 
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._sTitle.compare("") ) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "title"));
+    DOMText* newDOMText = doc->createTextNode( XMLString::transcode( toBeAdd._sTitle.c_str()));
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._sText.compare("")) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "text"));
+    DOMText* newDOMText = doc->createTextNode( XMLString::transcode( toBeAdd._sText.c_str()));
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+  
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._sMnemonic.compare("")) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "mnemonic"));
+    DOMText* newDOMText = doc->createTextNode( XMLString::transcode( toBeAdd._sMnemonic.c_str()));
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._bchecked != NULL) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "checked"));
+    DOMText* newDOMText = NULL;
+    newDOMText = doc->createTextNode( XMLString::transcode( "true"));
+
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+  else {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "checked"));
+    DOMText* newDOMText = NULL;
+    newDOMText = doc->createTextNode( XMLString::transcode( "false"));
+
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._bEditable != NULL) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "editable"));
+    DOMText* newDOMText = NULL;
+    newDOMText = doc->createTextNode( XMLString::transcode( "true"));
+
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+  else {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "editable"));
+    DOMText* newDOMText = NULL;
+    newDOMText = doc->createTextNode( XMLString::transcode( "false"));
+    
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+  
+  // Property Element zusammensetzen und an die Gruppe haengen
+  if( toBeAdd._bIsScrollable != NULL) {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "scrollable"));
+    DOMText* newDOMText = NULL;
+    newDOMText = doc->createTextNode( XMLString::transcode( "true"));
+    
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+  else {
+    DOMElement* newProperty = doc->createElement( XMLString::transcode( "property"));
+  
+    newProperty->setAttribute( XMLString::transcode( "name"), XMLString::transcode( "scrollable"));
+    DOMText* newDOMText = NULL;
+    newDOMText = doc->createTextNode( XMLString::transcode( "false"));
+
+    newProperty->appendChild( newDOMText);
+    newWidgetProperties->appendChild( newProperty);
+  }
+    
+  // die Gruppen Properties und Childs an das Widget Element haengen
   newWidget->appendChild( newWidgetProperties);
   newWidget->appendChild( newWidgetChilds);
 
-  DOMNodeList *rootwidgetlist = doc->getElementsByTagName( XMLString::transcode( "widgets"));
-  if( rootwidgetlist->getLength() <= 0)         // No widget found
+  // obersten DOM Root ermitteln
+  DOMNodeList *rootwidgetslist = doc->getElementsByTagName( XMLString::transcode( "widgets"));
+  if( rootwidgetslist->getLength() <= 0)         // No widget found
   {
     return false;
   }
-  
-  DOMElement *rootWidget = (DOMElement *) rootwidgetlist->item(0);
-  
-  rootWidget->appendChild( newWidget);
-  return false;
+  if( idOfParentWidget == -1) {
+    DOMElement *rootWidget = NULL;
+    rootWidget = (DOMElement *) rootwidgetslist->item(0);
+    rootWidget->appendChild( newWidget);
+  }
+  else {
+    DOMNodeList *rootwidgetlist = doc->getElementsByTagName( XMLString::transcode( "widget"));
+    if( rootwidgetlist->getLength() <= 0)         
+    {
+      return false;     // No widget founded
+    }
+
+    int temp = 0;
+
+    do
+    {
+      DOMElement *widget = (DOMElement *) rootwidgetlist->item(temp);
+      
+      int id = stringTo<int>( XMLString::transcode( widget->getAttribute( XMLString::transcode( "id"))));
+      if( id == idOfParentWidget) {                       // Wenn ID's uebereinstimmen ...
+        DOMNodeList *widgetsList = widget->getElementsByTagName( XMLString::transcode( "widgets"));
+        DOMElement *Widgets = (DOMElement *) widgetsList->item(0);
+        Widgets->appendChild( newWidget);
+        break;
+      }
+      temp++;
+    }while( temp < rootwidgetlist->getLength());
+  }
+
+  return true;
 }
 
 

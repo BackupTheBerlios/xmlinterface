@@ -18,6 +18,9 @@
 #include "DOMPrintErrorHandler.hpp"
 #include "widget.hpp"
 
+// Helperfunctions
+std::string enumToString( enum Types eType);
+
 class vstdom
 {
 public:

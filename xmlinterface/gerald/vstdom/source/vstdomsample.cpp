@@ -41,12 +41,39 @@ int main( int argC, char *argV[])
   testvstdom->updateWidget( updatedWidget, updatedWidget._iId);
 
   widget newWidget;
-  newWidget._iId = 88;
   newWidget._eWidgetType = window;
+  newWidget._iId = 88;
+  newWidget._iCallbackId = 120;
   newWidget._iHeight = 43;
+  newWidget._iWidth = 66;
+  newWidget._iXCoord = 5;
+  newWidget._iYCoord = 7;
+  newWidget._bchecked = true;
+  newWidget._bIsScrollable = false;
+  newWidget._bEditable = true;
+  newWidget._sMnemonic = "Alt-Q";
+  newWidget._sTitle = "Keine Ahnung";
+  newWidget._sText = "Text-O-Text";
 
   testvstdom->addWidget(newWidget);
 
+  widget newWidgetZwei;
+  newWidgetZwei._eWidgetType = label;
+  newWidgetZwei._iId = 10;
+  newWidgetZwei._iCallbackId = 12;
+  newWidgetZwei._iHeight = 4;
+  newWidgetZwei._iWidth = 6;
+  newWidgetZwei._iXCoord = 52;
+  newWidgetZwei._iYCoord = 72;
+  newWidgetZwei._bchecked = true;
+  newWidgetZwei._bIsScrollable = false;
+  newWidgetZwei._bEditable = true;
+  newWidgetZwei._sMnemonic = "Alt-Q";
+  newWidgetZwei._sTitle = "Label Text";
+  newWidgetZwei._sText = "Text-O-Text";
+
+  testvstdom->addWidget(newWidgetZwei, 88);
+  
   // schreibe neues xml File
   testvstdom->writexml( "neues_xml.xml");
   

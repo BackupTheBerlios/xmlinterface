@@ -1,14 +1,19 @@
 Letzte Änderungen:
 
+16.06.2004
+
+- addwidget implementiert
+- label als type hinzugefügt
+- Fehler beim auslesen von editable behoben
+- Prototypen in vstdom.hpp für enumToString hinzugefügt
+
 08.06.2004
 
 - id auf int umgestellt, demzufolge haben sich einige Funktionsparameter geändert
   - widget* getWidget( int id);
   - int getIdOfRootWidget( long NumberOfRootWidget);
-  
 - Funktion: int getNameOfRootWidget( long NumberOfRootWidget);
   ist dementsprechend raus geflogen
-  
 - Funktion: bool updateWidget( widget changedWidget, int idOfWidget);
   ist implemntiert und kann getestet werden
 
