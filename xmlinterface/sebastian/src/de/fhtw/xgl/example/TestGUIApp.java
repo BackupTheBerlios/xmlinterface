@@ -5,6 +5,7 @@
 package de.fhtw.xgl.example;
 
 import de.fhtw.xgl.interpreter.swing.SwingInterpreter;
+//import de.fhtw.xgl.interpreter.Validator;
 import java.io.FileInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +32,7 @@ public class TestGUIApp
 	/*
 	 * The standard-inputfile, if no filename is delivered 
 	 */
-	public final static String inputFile =
+	public static String inputFile =
 		"xmlgui.xml";
 		
 	private SwingInterpreter interpreter;
@@ -45,6 +46,17 @@ public class TestGUIApp
 	{
 		try
 		{
+			inputFile = file;
+			//Annahme: args beinhaltet xml file und schema file (bzw. dtd)
+			//args[0] = xsd | dtd
+			//args[1] - xml gui file
+//			Validator myValidator = new Validator("schema/xmlInterface_final.xsd", file);
+//			if (myValidator.verify()) {
+//				System.err.println("XML file is valid!");
+//			} else {
+//				//entsprechende Fehlermeldungen kommen aus der Validator Klasse
+//				System.err.println("XML file is not valid!");
+//			}
 			FileInputStream reader = new FileInputStream(file);
 			
 			// create interpreter and add sample-callbackhandler
@@ -96,6 +108,14 @@ public class TestGUIApp
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public SwingInterpreter getInterpreter()
+	{
+		return interpreter;
 	}
 
 }

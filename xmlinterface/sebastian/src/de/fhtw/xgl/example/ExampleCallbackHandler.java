@@ -6,7 +6,10 @@ package de.fhtw.xgl.example;
 
 // Project-imports
 import de.fhtw.xgl.interpreter.CallbackHandler;
+import de.fhtw.xgl.interpreter.Interpreter;
 import de.fhtw.xgl.interpreter.Widget;
+import de.fhtw.xgl.interpreter.swing.widgets.SwingTextfield;
+import de.fhtw.xgl.interpreter.swing.widgets.SwingCheckbox;
 
 /**
  * 
@@ -38,8 +41,26 @@ public class ExampleCallbackHandler implements CallbackHandler
 			case 11:
 				tga.store();
 				break;
-			default :
-				javax.swing.JOptionPane.showMessageDialog(null, "Callback [" + Integer.toString(w.getCallbackID()) + "] ausgelöst!");
+			case 9 :
+				Interpreter i = tga.getInterpreter();
+				Widget w1 = i.getWidgetById(5);
+				String message = "Das Formular wurde mit folgenden Werten abgeschickt:\n";
+				SwingTextfield t = (SwingTextfield)w1;
+				message += "Name: " + t.getText() + "\n";
+				w1 = i.getWidgetById(6);
+				t = (SwingTextfield)w1;
+				message += "Alter: " + t.getText() + "\n";
+				w1 = i.getWidgetById(7);
+				SwingCheckbox c = (SwingCheckbox)w1;
+				if (!c.isChecked())
+				{
+					w1 = i.getWidgetById(8);
+					c = (SwingCheckbox)w1;
+					if (c.isChecked()) message += "Geschlecht: weiblich";
+				}
+				else
+					message += "Geschlecht: männlich";
+				javax.swing.JOptionPane.showMessageDialog(null, message);
 				break;
 		}
 	}
@@ -68,16 +89,16 @@ public class ExampleCallbackHandler implements CallbackHandler
 				name = "Hilfe/Über";
 				break;
 			case 5:
-				name = "Textfeld";
+				name = "Name";
 				break;
 			case 6:
-				name = "Geschlecht/männlich";
+				name = "Alter";
 				break;
 			case 7:
-				name = "Geschlecht/weiblich";
+				name = "Geschlecht männlich";
 				break;
 			case 8:
-				name = "Beruf";
+				name = "Geschlecht weiblich";
 				break;
 			case 9:
 				name = "Abschicken";
