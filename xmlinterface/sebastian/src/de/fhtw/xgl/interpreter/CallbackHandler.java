@@ -23,4 +23,12 @@ public interface CallbackHandler
 	 */
 	public void handleCallback(Widget widget);
 	
+	/**
+	 * Returns the callback's name.
+	 * 
+	 * @param callbackId ID of the callback
+	 * @return the callback's name
+	 */
+	public String getCallbackName(int callbackId);
+	
 }

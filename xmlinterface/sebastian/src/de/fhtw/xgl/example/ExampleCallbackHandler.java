@@ -44,4 +44,52 @@ public class ExampleCallbackHandler implements CallbackHandler
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see de.fhtw.xgl.interpreter.CallbackHandler#getCallbackName(int)
+	 */
+	public String getCallbackName(int callbackId)
+	{
+		String name = "";
+		switch (callbackId)
+		{
+			case 0:
+				name = "Fenster schließen";
+				break;
+			case 1:
+				name = "Programm beenden";
+				break;
+			case 2:
+				name = "Hilfe/Inhalt";
+				break;
+			case 3:
+				name = "Hilfe/Suchen";
+				break;
+			case 4:
+				name = "Hilfe/Über";
+				break;
+			case 5:
+				name = "Textfeld";
+				break;
+			case 6:
+				name = "Geschlecht/männlich";
+				break;
+			case 7:
+				name = "Geschlecht/weiblich";
+				break;
+			case 8:
+				name = "Beruf";
+				break;
+			case 9:
+				name = "Abschicken";
+				break;
+			case 10:
+				name = "Zurücksetzen";
+				break;
+			case 11:
+				name = "Oberfläche speichern";
+				break;
+		}
+		return name;
+	}
+
 }
